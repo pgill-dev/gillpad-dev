@@ -1,1 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <meta
+    name="description"
+    content="Zero Trust remote access platform case study using Cloudflare Access, Apache Guacamole, Docker, PostgreSQL, and segmented Proxmox infrastructure."
+  >
+  <meta name="author" content="Paden Gillispie">
+
+  <meta property="og:title" content="Zero Trust Remote Access Platform | Gillpad">
+  <meta
+    property="og:description"
+    content="A secure, browser-based remote access platform built without exposing inbound management ports."
+  >
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://gillpad.dev/projects/zero-trust-access.html">
+
+  <link rel="canonical" href="https://gillpad.dev/projects/zero-trust-access.html">
+  <link rel="stylesheet" href="/style.css">
+
+  <title>Zero Trust Remote Access Platform | Gillpad</title>
+
+  <style>
+    .case-study {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 8% 6rem;
+    }
+
+    .case-hero {
+      padding: 7rem 0 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 2rem;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .case-hero h1 {
+      max-width: 950px;
+      font-size: clamp(3rem, 7vw, 6rem);
+      line-height: 1;
+    }
+
+    .case-summary {
+      max-width: 820px;
+      margin-top: 2rem;
+      color: var(--muted);
+      font-size: 1.2rem;
+    }
+
+    .case-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .tag {
+      padding: 0.45rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--muted);
+      background: var(--surface);
+      font-size: 0.9rem;
+    }
+
+    .case-section {
+      padding: 5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .case-section h2 {
+      margin-bottom: 1.5rem;
+      font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    .case-section p,
+    .case-section li {
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .case-section p + p {
+      margin-top: 1rem;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .detail-card {
+      padding: 1.75rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+    }
+
+    .detail-card h3 {
+      margin-bottom: 0.8rem;
+      font-size: 1.25rem;
+    }
+
+    .architecture {
+      margin-top: 2rem;
+      padding: 2rem;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      color: var(--text);
+      font-family: "Courier New", Courier, monospace;
+      line-height: 1.8;
+      white-space: pre;
+    }
+
+    .case-list {
+      margin-top: 1.5rem;
+      padding-left: 1.25rem;
+    }
+
+    .case-list li + li {
+      margin-top: 0.75rem;
+    }
+
+    .outcome {
+      padding: 2rem;
+      margin-top: 2rem;
+      border-left: 4px solid var(--accent);
+      background: var(--surface);
+    }
+
+    .callout {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface-light);
+    }
+
+    .project-footer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding-top: 3rem;
+    }
+
+    @media (max-width: 800px) {
+      .two-column {
+        grid-template-columns: 1fr;
+      }
+
+      .case-hero {
+        padding-top: 4rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="hero" style="min-height:auto;">
+    <nav aria-label="Primary navigation">
+      <a class="logo" href="/">GILLPAD.DEV</a>
+
+      <div class="nav-links">
+        <a href="/#about">About</a>
+        <a href="/#projects">Projects</a>
+        <a href="/#skills">Skills</a>
+        <a href="/#contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="case-study">
+    <section class="case-hero">
+      <a class="back-link" href="/#projects">← Back to projects</a>
+
+      <p class="eyebrow">ZERO TRUST · REMOTE ACCESS · PLATFORM ENGINEERING</p>
+
+      <h1>Zero Trust Remote Access Platform</h1>
+
+      <p class="case-summary">
+        Designed and operated an identity-first remote access platform using
+        Cloudflare Access, Apache Guacamole, Docker, PostgreSQL, and segmented
+        Proxmox infrastructure without exposing inbound management ports.
+      </p>
+
+      <div class="case-meta" aria-label="Technologies used">
+        <span class="tag">Cloudflare Access</span>
+        <span class="tag">Cloudflare Tunnel</span>
+        <span class="tag">Apache Guacamole</span>
+        <span class="tag">Docker</span>
+        <span class="tag">PostgreSQL</span>
+        <span class="tag">Proxmox VE</span>
+        <span class="tag">OPNsense</span>
+        <span class="tag">Linux</span>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <p class="section-label">THE PROBLEM</p>
+      <h2>Secure access without exposing the lab.</h2>
+
+      <p>
+        The environment needed browser-based SSH and RDP access for multiple
+        users while keeping the Proxmox management plane and internal systems
+        off the public Internet.
+      </p>
+
+      <p>
+        Traditional port forwarding would have created direct exposure for
+        management protocols. A mesh VPN would have reduced that exposure, but
+        still introduced endpoint-agent requirements and broader network trust.
+        The selected design instead enforced identity before application access
+        and used a single controlled ingress path.
+      </p>
+    </section>
+
+    <section class="case-section">
+      <p class="section-label">ARCHITECTURE</p>
+      <h2>Identity at the edge, brokered access inside.</h2>
+
+      <div class="architecture" role="img" aria-label="Logical architecture diagram">
+User
+  ↓
+Cloudflare Access
+  • Google SSO
+  • MFA
+  • Explicit allow policy
+  • Default deny
+  ↓
+Cloudflare Tunnel
+  • Outbound-only connection
+  • No inbound firewall ports
+  ↓
+Apache Guacamole
+  • Browser-based SSH and RDP broker
+  • Docker deployment
+  • PostgreSQL-backed users and permissions
+  ↓
+Bastion / Jump Box
+  • Controlled management choke point
+  ↓
+Segmented Internal Systems
+  • Proxmox management
+  • Linux administration
+  • Windows training targets
+      </div>
+
+      <div class="two-column">
+        <article class="detail-card">
+          <h3>Three authentication layers</h3>
+          <p>
+            Users pass Cloudflare identity checks, Guacamole authentication,
+            and native endpoint authentication before reaching a target system.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>No exposed management services</h3>
+          <p>
+            SSH, RDP, and virtualization management interfaces remain internal.
+            Cloudflare Tunnel maintains an outbound connection to the edge.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <p class="section-label">SECURITY CONTROLS</p>
+      <h2>Designed to limit trust and blast radius.</h2>
+
+      <div class="two-column">
+        <article class="detail-card">
+          <h3>Identity-first access</h3>
+          <p>
+            MFA and explicit allow rules are evaluated before any application
+            traffic reaches the lab.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Default-deny policy</h3>
+          <p>
+            Users must be intentionally authorized. A final deny policy prevents
+            accidental access outside approved identities.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Individual accounts</h3>
+          <p>
+            Shared credentials were avoided. Guacamole users received scoped
+            access to only the connections required for their role.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Central revocation</h3>
+          <p>
+            Access can be removed at the Cloudflare edge, then disabled inside
+            Guacamole, providing a fast and layered revocation path.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Segmented management path</h3>
+          <p>
+            The bastion acts as the access choke point between authenticated
+            users and internal systems.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Persistent authorization data</h3>
+          <p>
+            PostgreSQL stores Guacamole identities, connections, and permissions
+            across container restarts and host reboots.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <p class="section-label">ENGINEERING CHALLENGES</p>
+      <h2>Most failures crossed more than one layer.</h2>
+
+      <ul class="case-list">
+        <li>
+          Corrected DNS records associated with an incorrect tunnel identifier.
+        </li>
+        <li>
+          Resolved routing failures caused by Cloudflare forwarding to an
+          unreachable backend after container network changes.
+        </li>
+        <li>
+          Accounted for Guacamole being served from a specific application
+          context path rather than the root hostname.
+        </li>
+        <li>
+          Verified PostgreSQL persistence instead of assuming authentication
+          failures meant the database had been lost.
+        </li>
+        <li>
+          Reordered Access policies so explicit allow rules were evaluated
+          before the final deny rule.
+        </li>
+        <li>
+          Diagnosed silent Layer 2 packet loss caused by hypervisor-level
+          firewall filtering on an isolated bridge.
+        </li>
+        <li>
+          Stabilized long-running access sessions through server-side XRDP
+          tuning and persistent SSH workflows using tmux.
+        </li>
+      </ul>
+
+      <div class="callout">
+        <strong>Key troubleshooting principle:</strong>
+        validate each layer independently—container runtime, application,
+        database, network path, identity policy, and endpoint authentication.
+      </div>
+    </section>
+
+    <section class="case-section">
+      <p class="section-label">VALIDATION</p>
+      <h2>Proved the design through controlled tests.</h2>
+
+      <div class="two-column">
+        <article class="detail-card">
+          <h3>Access enforcement</h3>
+          <p>
+            Tested unauthenticated and authenticated browser sessions to confirm
+            Cloudflare Access could not be bypassed.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Protocol access</h3>
+          <p>
+            Validated SSH and RDP through Guacamole while keeping target services
+            unavailable directly from the Internet.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Reboot recovery</h3>
+          <p>
+            Confirmed container startup, database persistence, tunnel routing,
+            and application availability after restart.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>User lifecycle</h3>
+          <p>
+            Tested creation, scoped authorization, and centralized revocation of
+            individual user access.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Network segmentation</h3>
+          <p>
+            Verified internal bridge operation, bastion reachability, and
+            controlled management access through firewall logs and connection tests.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Operational resilience</h3>
+          <p>
+            Documented recovery procedures, troubleshooting steps, and a stable
+            baseline suitable for snapshots and future expansion.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <p class="section-label">OUTCOME</p>
+      <h2>A repeatable, controlled ingress platform.</h2>
+
+      <div class="outcome">
+        <p>
+          The completed platform provides browser-based, multi-user access to
+          internal lab systems with MFA, layered authentication, scoped
+          permissions, centralized revocation, and no inbound management ports.
+        </p>
+
+        <p>
+          The design also established a reusable operating model for future
+          training environments, malware-analysis workflows, and isolated
+          security ranges.
+        </p>
+      </div>
+    </section>
+
+    <section class="case-section">
+      <p class="section-label">LESSONS LEARNED</p>
+      <h2>What this project reinforced.</h2>
+
+      <ul class="case-list">
+        <li>Identity, application, and endpoint authentication should remain separate.</li>
+        <li>Policy order must be explicit and validated.</li>
+        <li>ARP failure should be treated as a Layer 2 problem before routing is blamed.</li>
+        <li>Container health does not guarantee application reachability.</li>
+        <li>Persistent data and persistent network addressing are different concerns.</li>
+        <li>CLI state is often more authoritative than a stale management interface.</li>
+        <li>Recovery procedures are part of the architecture, not an afterthought.</li>
+      </ul>
+    </section>
+
+    <section class="case-section">
+      <p class="section-label">NEXT PHASE</p>
+      <h2>Planned expansion.</h2>
+
+      <ul class="case-list">
+        <li>Add sanitized architecture graphics and selected validation screenshots.</li>
+        <li>Expand role-based access tiers for different lab users.</li>
+        <li>Integrate lightweight authentication-failure monitoring and alerting.</li>
+        <li>Use the same access model for isolated malware-analysis and GOAD ranges.</li>
+        <li>Automate deployment validation and recovery checks.</li>
+      </ul>
+
+      <div class="project-footer">
+        <a class="button primary" href="/#projects">View more projects</a>
+        <a class="button secondary" href="/assets/PadenGillispie_Resume_2026.pdf" target="_blank" rel="noopener noreferrer">
+          View resume
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2026 Paden Gillispie. Built with GitHub and Cloudflare Pages.</p>
+  </footer>
+</body>
+</html>

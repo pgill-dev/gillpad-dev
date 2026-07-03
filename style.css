@@ -172,6 +172,26 @@ footer {
   color: var(--muted);
 }
 
+.project-image {
+  margin-top: 2rem;
+}
+
+.project-image img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+}
+
+.project-image figcaption {
+  margin-top: 0.75rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
 @media (max-width: 800px) {
   .nav-links {
     display: none;

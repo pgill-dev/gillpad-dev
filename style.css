@@ -359,3 +359,15 @@ footer {
     grid-template-columns: 1fr;
   }
 }
+.mermaid-card {
+  margin-top: 2rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  overflow-x: auto;
+}
+
+.mermaid-card pre {
+  margin: 0;
+}

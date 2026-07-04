@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Case study for Proxmox recovery, stabilization, backup validation, and lab migration work."
+  >
+
+  <title>Proxmox Recovery and Migration | Gillpad</title>
+
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+  <header class="hero" style="min-height:auto;">
+    <nav aria-label="Primary navigation">
+
+      <a class="logo" href="/">
+        GILLPAD.DEV
+      </a>
+
+      <div class="nav-links">
+        <a href="/#about">About</a>
+        <a href="/#projects">Projects</a>
+        <a href="/#skills">Skills</a>
+        <a href="/#contact">Contact</a>
+      </div>
+
+    </nav>
+  </header>
+
+  <main class="case-study">
+
+    <section class="case-hero">
+
+      <a class="back-link" href="/#projects">
+        ← Back to projects
+      </a>
+
+      <p class="eyebrow">
+        INFRASTRUCTURE CASE STUDY
+      </p>
+
+      <h1>
+        Proxmox Recovery and Migration
+      </h1>
+
+      <p class="case-summary">
+        Recovery, stabilization, and migration work for a virtualization lab
+        environment built around Proxmox VE, Proxmox Backup Server, ZFS-backed
+        storage, and repeatable validation steps.
+      </p>
+
+      <div class="case-meta">
+        <span class="tag">Status: Completed</span>
+        <span class="tag">Type: Infrastructure Migration</span>
+        <span class="tag">Role: Operator / Engineer</span>
+        <span class="tag">Focus: Recovery and Validation</span>
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        PROBLEM
+      </p>
+
+      <h2>
+        The lab needed a stable virtualization and backup foundation.
+      </h2>
+
+      <p>
+        The environment required a more recoverable platform for virtual
+        machines, lab workloads, and cybersecurity training infrastructure.
+        The work focused on stabilizing host access, validating backup paths,
+        improving recoverability, and supporting migration from legacy
+        virtualization workflows into Proxmox-based operations.
+      </p>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        ARCHITECTURE
+      </p>
+
+      <h2>
+        Proxmox VE for compute, Proxmox Backup Server for recovery.
+      </h2>
+
+      <div class="architecture" role="img" aria-label="Proxmox recovery architecture">
+        <p><strong>Virtual Machines</strong></p>
+        <p>↓</p>
+        <p><strong>Proxmox VE Host</strong><br>VM lifecycle, storage mapping, import, validation</p>
+        <p>↓</p>
+        <p><strong>Proxmox Backup Server</strong><br>Datastore, backup verification, restore readiness</p>
+        <p>↓</p>
+        <p><strong>Recovery Workflow</strong><br>Backup, integrity check, restore planning, documentation</p>
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        ENGINEERING WORK
+      </p>
+
+      <h2>
+        Recovery was treated as an operational workflow, not a one-time task.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Backup validation</h3>
+          <p>
+            Verified that backups completed successfully and that backup
+            artifacts appeared in the expected datastore paths.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Migration support</h3>
+          <p>
+            Supported VM movement from legacy virtualization workflows into
+            Proxmox-based management and backup operations.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Failure troubleshooting</h3>
+          <p>
+            Diagnosed host, VM, storage, and virtualization issues encountered
+            during backup and migration testing.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Documentation</h3>
+          <p>
+            Captured operational steps, recovery checks, naming conventions,
+            validation notes, and lessons learned for future operators.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        OUTCOME
+      </p>
+
+      <h2>
+        The environment gained a clearer recovery path.
+      </h2>
+
+      <p>
+        The work improved confidence in the lab’s backup and recovery posture
+        by validating the platform, documenting the operational path, and
+        creating a repeatable process for future VM protection and migration.
+      </p>
+
+      <div class="project-footer">
+        <a class="button primary" href="/#projects">
+          Back to projects
+        </a>
+
+        <a class="button secondary" href="/projects/zero-trust-access.html">
+          Read Zero Trust case study
+        </a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      © 2026 Paden Gillispie. Built with GitHub and Cloudflare Pages.
+    </p>
+  </footer>
+
+</body>
+</html>

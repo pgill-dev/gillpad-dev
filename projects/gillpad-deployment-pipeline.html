@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Case study for a GitHub-backed Cloudflare Pages deployment pipeline for Gillpad.dev."
+  >
+
+  <title>Gillpad Deployment Pipeline | Gillpad</title>
+
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+  <header class="hero" style="min-height:auto;">
+    <nav aria-label="Primary navigation">
+
+      <a class="logo" href="/">
+        GILLPAD.DEV
+      </a>
+
+      <div class="nav-links">
+        <a href="/#about">About</a>
+        <a href="/#projects">Projects</a>
+        <a href="/#skills">Skills</a>
+        <a href="/#contact">Contact</a>
+      </div>
+
+    </nav>
+  </header>
+
+  <main class="case-study">
+
+    <section class="case-hero">
+
+      <a class="back-link" href="/#projects">
+        ← Back to projects
+      </a>
+
+      <p class="eyebrow">
+        DEVOPS CASE STUDY
+      </p>
+
+      <h1>
+        Gillpad Deployment Pipeline
+      </h1>
+
+      <p class="case-summary">
+        A static portfolio deployment pipeline built with GitHub and Cloudflare
+        Pages. The project focused on creating a clean source-controlled workflow
+        for publishing a professional technical portfolio, connecting a custom
+        domain, validating deployments, and using the site itself as a live
+        proof-of-work platform.
+      </p>
+
+      <div class="case-meta">
+        <span class="tag">Status: Operational</span>
+        <span class="tag">Type: Web Deployment</span>
+        <span class="tag">Role: Builder / Operator</span>
+        <span class="tag">Focus: GitHub and Cloudflare Pages</span>
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        PROBLEM
+      </p>
+
+      <h2>
+        The portfolio needed a reliable deployment workflow, not a fragile manual upload.
+      </h2>
+
+      <p>
+        A professional portfolio needs to be easy to update, reliable to deploy,
+        and simple to validate. The goal was to avoid a fragile manually uploaded
+        site and instead build a repeatable workflow where changes are made in
+        GitHub, deployed automatically through Cloudflare Pages, and served
+        through a custom domain.
+      </p>
+
+      <p>
+        The project also needed to separate the public portfolio from private
+        home lab access. The public site should live on a safe static hosting
+        path, while the lab itself remains behind separate access controls and
+        Zero Trust architecture.
+      </p>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        ARCHITECTURE
+      </p>
+
+      <h2>
+        GitHub acts as the source of truth and Cloudflare Pages handles deployment.
+      </h2>
+
+      <div class="mermaid-card">
+        <pre class="mermaid">
+flowchart TD
+  EDIT[Edit HTML and CSS] --> GIT[Commit to GitHub Main Branch]
+  GIT --> CF[Cloudflare Pages Deployment]
+  CF --> PREVIEW[Preview or Production Deploy]
+  PREVIEW --> DOMAIN[Custom Domain: gillpad.dev]
+  DOMAIN --> USER[Public Visitor]
+  CF --> VALIDATE[Deployment Validation]
+  VALIDATE --> FIX[Fix Links, Cache, or Paths]
+  FIX --> EDIT
+        </pre>
+      </div>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Public site path</h3>
+          <p>
+            The portfolio is served through Cloudflare Pages and a custom domain,
+            keeping the public presentation layer simple, fast, and easy to
+            validate.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Private lab separation</h3>
+          <p>
+            The home lab tunnel is not part of the public website path. The site
+            showcases the lab without exposing private lab infrastructure.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        ENGINEERING WORK
+      </p>
+
+      <h2>
+        The site became a repeatable deployment workflow.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>GitHub source control</h3>
+          <p>
+            Created a GitHub repository to act as the source of truth for the
+            portfolio. Site content, project pages, assets, and styling are
+            managed through versioned files instead of manual one-off uploads.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Cloudflare Pages deployment</h3>
+          <p>
+            Connected the GitHub repository to Cloudflare Pages so updates to
+            the main branch automatically deploy to the public site.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Custom domain configuration</h3>
+          <p>
+            Configured the root domain and www hostname to route to the
+            Cloudflare Pages project, replacing old parking behavior with a
+            clean public entry point.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Static site structure</h3>
+          <p>
+            Organized the site around reusable static files: a homepage,
+            stylesheet, asset directory, and project pages under a dedicated
+            projects directory.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Case study routing</h3>
+          <p>
+            Built individual project pages and linked them from homepage project
+            cards. A shared coming-soon page provides a clean backend for
+            unfinished case studies.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Cache and deployment troubleshooting</h3>
+          <p>
+            Worked through deployment timing, stale content, broken asset paths,
+            and browser or Cloudflare cache behavior while validating that
+            GitHub changes appeared correctly on the live domain.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        SITE STRUCTURE
+      </p>
+
+      <h2>
+        The repository structure keeps future updates simple.
+      </h2>
+
+      <div class="architecture" role="img" aria-label="Static site directory layout">
+        <p><strong>index.html</strong><br>Homepage, project cards, skills, contact, and resume link.</p>
+        <p><strong>style.css</strong><br>Shared visual system for homepage, cards, case studies, buttons, and diagrams.</p>
+        <p><strong>assets/</strong><br>Resume PDF and sanitized supporting media.</p>
+        <p><strong>projects/</strong><br>Individual case-study pages and the shared coming-soon page.</p>
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        VALIDATION
+      </p>
+
+      <h2>
+        Deployment was validated through live routes, assets, and domain behavior.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Deployment validation</h3>
+          <p>
+            Confirmed Cloudflare Pages completed successful production
+            deployments after GitHub commits.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Domain validation</h3>
+          <p>
+            Confirmed both the root domain and www hostname pointed to the
+            portfolio instead of parked or stale content.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Link validation</h3>
+          <p>
+            Checked homepage navigation, project card links, resume access, and
+            case-study routing.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Asset validation</h3>
+          <p>
+            Validated that static assets such as PDF resume files and project
+            visuals were placed in the correct paths and referenced correctly
+            from HTML.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Separation validation</h3>
+          <p>
+            Confirmed that the public site is served through Cloudflare Pages
+            and does not depend on the private home lab tunnel.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Iteration validation</h3>
+          <p>
+            Used repeated commits and redeployments to confirm the workflow was
+            practical for ongoing portfolio updates.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        OUTCOME
+      </p>
+
+      <h2>
+        The website became part of the proof-of-work platform.
+      </h2>
+
+      <p>
+        The result is a source-controlled public portfolio that can be updated
+        quickly and deployed reliably. The deployment pipeline makes the website
+        itself part of the portfolio: it demonstrates GitHub workflow, static
+        hosting, DNS management, Cloudflare Pages deployment, troubleshooting,
+        and iterative development.
+      </p>
+
+      <p>
+        The project also created a reusable framework for future technical case
+        studies. New projects can be added by creating an HTML page under the
+        projects directory, linking it from the homepage, and allowing
+        Cloudflare Pages to deploy the update.
+      </p>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        LESSONS LEARNED
+      </p>
+
+      <h2>
+        A simple static deployment pipeline is enough when it is clean and repeatable.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Static hosting is enough</h3>
+          <p>
+            A portfolio does not need a complex backend to be useful. Static
+            HTML, CSS, GitHub, and Cloudflare Pages are enough for a fast,
+            clean, reliable professional site.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>GitHub should be the source of truth</h3>
+          <p>
+            Managing the site through GitHub makes changes easier to track,
+            revert, and deploy.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>DNS matters</h3>
+          <p>
+            A working site still needs correct DNS, custom domain configuration,
+            and SSL validation before it feels finished.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Cache issues are part of deployment</h3>
+          <p>
+            Broken-looking changes are not always code problems. Sometimes the
+            issue is stale browser cache, deployment timing, or an old asset
+            path.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Public and private should stay separate</h3>
+          <p>
+            The website should showcase the lab without exposing the lab.
+            Cloudflare Pages provides a safe public presentation layer, while
+            private lab services remain behind separate access controls.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Reusable structure speeds up future work</h3>
+          <p>
+            Once the homepage, shared CSS, and case-study pattern existed, new
+            project pages could be added quickly and consistently.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        PROJECT SUMMARY
+      </p>
+
+      <h2>
+        A repeatable publishing workflow for technical proof of work.
+      </h2>
+
+      <p>
+        This project established a GitHub-backed deployment pipeline for a public
+        technical portfolio using Cloudflare Pages, custom DNS, static HTML/CSS,
+        project case-study routing, hosted assets, and deployment validation
+        workflows.
+      </p>
+
+      <p>
+        The site provides a clean public proof-of-work platform while remaining
+        separate from private lab infrastructure. New case studies can be added
+        through the same repeatable workflow: create a project page, link it
+        from the homepage, commit to GitHub, validate the Cloudflare deployment,
+        and test the live route.
+      </p>
+
+      <div class="project-footer">
+        <a class="button primary" href="/#projects">
+          Back to projects
+        </a>
+
+        <a class="button secondary" href="/projects/zero-trust-access.html">
+          Read Zero Trust case study
+        </a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      © 2026 Paden Gillispie. Built with GitHub and Cloudflare Pages.
+    </p>
+  </footer>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "strict",
+      themeVariables: {
+        darkMode: true,
+        background: "transparent",
+        primaryColor: "#121c22",
+        primaryTextColor: "#e8fff7",
+        primaryBorderColor: "#5ae6b4",
+        lineColor: "#78d2ff",
+        secondaryColor: "#182832",
+        tertiaryColor: "#20313c",
+        fontFamily: "Inter, system-ui, sans-serif",
+        fontSize: "22px"
+      }
+    });
+  </script>
+
+</body>
+</html>

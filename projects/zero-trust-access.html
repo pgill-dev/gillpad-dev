@@ -229,8 +229,21 @@
       <p class="section-label">ARCHITECTURE</p>
       <h2>Identity at the edge, brokered access inside.</h2>
 
-      <div class="architecture">
-        ...
+      <div class="mermaid-card">
+      <pre class="mermaid">
+        flowchart TD
+          U[User Browser] --> CFA[Cloudflare Access]
+          CFA -->|Google SSO + MFA| POL[Explicit Allow Policy]
+          POL -->|Default Deny if not allowed| TUN[Cloudflare Tunnel]
+          TUN -->|Outbound-only connection| GUA[Apache Guacamole]
+          GUA -->|App Authentication| BAST[Bastion / Jump Box]
+          BAST -->|RDP / SSH| INT[Segmented Internal Systems]
+
+          LEG1[Legend]
+          LEG1 --> L1[Identity enforced before app access]
+          LEG1 --> L2[No inbound management ports exposed]
+          LEG1 --> L3[Guacamole brokers SSH/RDP only after auth]
+      </pre>
       </div>
 
       <div class="detail-card">
@@ -496,5 +509,14 @@ Segmented Internal Systems
   <footer>
     <p>© 2026 Paden Gillispie. Built with GitHub and Cloudflare Pages.</p>
   </footer>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "dark",
+      securityLevel: "strict"
+    });
+  </script>
 </body>
 </html>

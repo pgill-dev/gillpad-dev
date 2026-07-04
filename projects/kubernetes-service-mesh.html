@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Case study for Kubernetes ingress and Istio service mesh engineering using Helm, manifests, gateways, services, and traffic-path troubleshooting."
+  >
+
+  <title>Kubernetes and Service Mesh Engineering | Gillpad</title>
+
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+  <header class="hero" style="min-height:auto;">
+    <nav aria-label="Primary navigation">
+
+      <a class="logo" href="/">
+        GILLPAD.DEV
+      </a>
+
+      <div class="nav-links">
+        <a href="/#about">About</a>
+        <a href="/#projects">Projects</a>
+        <a href="/#skills">Skills</a>
+        <a href="/#contact">Contact</a>
+      </div>
+
+    </nav>
+  </header>
+
+  <main class="case-study">
+
+    <section class="case-hero">
+
+      <a class="back-link" href="/#projects">
+        ← Back to projects
+      </a>
+
+      <p class="eyebrow">
+        CLOUD-NATIVE CASE STUDY
+      </p>
+
+      <h1>
+        Kubernetes and Service Mesh Engineering
+      </h1>
+
+      <p class="case-summary">
+        A cloud-native lab project focused on deploying and validating
+        Kubernetes ingress and service mesh concepts using Traefik, Istio,
+        Helm, manifests, and gateway routing. The work focused on understanding
+        how traffic enters a cluster, how services are exposed, how service mesh
+        components change traffic flow, and how to troubleshoot routing failures
+        such as 503 responses and missing gateway objects.
+      </p>
+
+      <div class="case-meta">
+        <span class="tag">Status: In Progress</span>
+        <span class="tag">Type: Cloud-Native Platform Lab</span>
+        <span class="tag">Role: Platform Engineer / Operator</span>
+        <span class="tag">Focus: Kubernetes and Istio</span>
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        PROBLEM
+      </p>
+
+      <h2>
+        Kubernetes networking adds multiple layers between users and applications.
+      </h2>
+
+      <p>
+        Kubernetes networking introduces several layers between a user request
+        and the application receiving that request. In a traditional VM
+        environment, exposing a service may be as simple as opening a port or
+        placing a reverse proxy in front of the application. In Kubernetes,
+        traffic has to pass through cluster networking, services, ingress
+        controllers or gateways, routing rules, and sometimes service mesh policy.
+      </p>
+
+      <p>
+        The challenge was to understand the difference between a basic ingress
+        controller and a service mesh, then deploy and troubleshoot those
+        components in a lab environment. The goal was not simply to install
+        Istio. The goal was to understand how the traffic path changes when
+        moving from a simpler ingress model to a service mesh model.
+      </p>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        ARCHITECTURE
+      </p>
+
+      <h2>
+        Ingress gets traffic into the cluster; service mesh adds deeper control.
+      </h2>
+
+      <div class="mermaid-card">
+        <pre class="mermaid">
+flowchart TD
+  USER[User Request] --> EDGE[External Entry Point]
+  EDGE --> GW[Gateway or Ingress Controller]
+  GW --> ROUTE[Ingress Rule or Virtual Service]
+  ROUTE --> SVC[Kubernetes Service]
+  SVC --> POD[Application Pod]
+  POD --> RESP[Response Path Back to User]
+        </pre>
+      </div>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Ingress-oriented flow</h3>
+          <p>
+            A traditional ingress controller routes external HTTP or HTTPS
+            traffic into a Kubernetes service, which then forwards traffic to
+            matching application pods.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Service mesh-oriented flow</h3>
+          <p>
+            An Istio-style model introduces gateways, virtual services, and mesh
+            proxies that provide additional routing control, policy options, and
+            observability potential.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        ENGINEERING WORK
+      </p>
+
+      <h2>
+        The work focused on installation, routing, and troubleshooting the traffic path.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Kubernetes traffic flow</h3>
+          <p>
+            Reviewed how Kubernetes exposes applications through services,
+            ingress resources, gateways, and routing objects before adding more
+            platform complexity.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Traefik comparison</h3>
+          <p>
+            Used Traefik as a simpler ingress-controller reference point for
+            understanding HTTP-to-service routing, middleware behavior,
+            redirects, TLS handling, and external access into workloads.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Istio deployment</h3>
+          <p>
+            Deployed Istio components using Helm-based installation steps and
+            validated that the expected resources were created in the cluster.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Gateway troubleshooting</h3>
+          <p>
+            Worked through gateway and routing issues where expected resources
+            did not exist or traffic returned 503 responses. Troubleshooting
+            focused on object names, namespaces, services, selectors, and backend
+            health.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Manifest review</h3>
+          <p>
+            Reviewed Kubernetes manifests to understand how declarative objects
+            define routing, gateways, services, and application exposure.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Simple-command workflow</h3>
+          <p>
+            Kept command usage simple and repeatable during deployment and
+            troubleshooting so the process could be followed without hiding
+            complexity behind long one-line commands.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        TROUBLESHOOTING MODEL
+      </p>
+
+      <h2>
+        Routing failures were traced layer by layer.
+      </h2>
+
+      <div class="mermaid-card">
+        <pre class="mermaid">
+flowchart TD
+  REQ[Request] --> GATEWAY[Gateway or Ingress]
+  GATEWAY --> ROUTE[Route or Virtual Service]
+  ROUTE --> SERVICE[Kubernetes Service]
+  SERVICE --> ENDPOINT[Endpoint]
+  ENDPOINT --> POD[Healthy Pod]
+  POD --> OK[Successful Response]
+
+  SERVICE -->|No endpoints| FAIL503[503 Failure]
+  ROUTE -->|Wrong service or port| FAILROUTE[Routing Failure]
+  GATEWAY -->|Wrong namespace or missing object| FAILGW[Gateway Failure]
+        </pre>
+      </div>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Confirm the resource exists</h3>
+          <p>
+            Before debugging traffic, confirm the gateway, ingress, virtual
+            service, service, and pods actually exist in the expected namespace.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Confirm the route points somewhere real</h3>
+          <p>
+            A route can exist and still fail if the backend service name, port,
+            namespace, or selector is wrong.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Confirm pod health</h3>
+          <p>
+            A 503 can indicate that the route exists but there are no healthy
+            endpoints behind the service.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Confirm namespace context</h3>
+          <p>
+            Many Kubernetes failures come from creating or checking resources in
+            the wrong namespace.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        SECURITY AND PLATFORM CONSIDERATIONS
+      </p>
+
+      <h2>
+        More control also means more operational complexity.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Ingress is not service mesh</h3>
+          <p>
+            An ingress controller primarily gets traffic into the cluster. A
+            service mesh can add deeper traffic management, service-to-service
+            controls, observability, and policy enforcement.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Control adds complexity</h3>
+          <p>
+            Istio adds powerful capabilities, but it also adds more resources to
+            validate and more places where misconfiguration can break traffic.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Declarative configuration matters</h3>
+          <p>
+            Cluster state depends on manifests, Helm values, namespaces, labels,
+            and selectors. Small mismatches can cause large routing failures.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Visibility is platform engineering</h3>
+          <p>
+            A working route is not enough. Operators need to understand how to
+            inspect resources, endpoints, pods, and events when something fails.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        VALIDATION
+      </p>
+
+      <h2>
+        The project was validated through installation checks and traffic-path troubleshooting.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Deployment validation</h3>
+          <p>
+            Confirmed Istio and related resources were installed into the
+            expected namespace and that the cluster accepted the required
+            manifests.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Routing validation</h3>
+          <p>
+            Reviewed gateway, ingress, or virtual service resources to confirm
+            that traffic rules existed and pointed toward the intended services.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Service validation</h3>
+          <p>
+            Checked whether Kubernetes services existed and whether they had
+            healthy endpoints behind them.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Failure validation</h3>
+          <p>
+            Used 503 responses and missing-resource errors as learning points to
+            trace the difference between an installed component, a defined route,
+            and a healthy application backend.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        OUTCOME
+      </p>
+
+      <h2>
+        The project created a stronger foundation for cloud-native platform work.
+      </h2>
+
+      <p>
+        The project improved understanding of Kubernetes ingress, gateway
+        routing, and service mesh architecture. It showed that successful
+        platform engineering requires more than installing a tool; it requires
+        understanding the traffic path, validating each layer, and knowing how to
+        troubleshoot when the cluster returns errors.
+      </p>
+
+      <p>
+        The work created a stronger foundation for future cloud-native projects
+        involving ingress controllers, Istio, Helm, Kubernetes manifests, and
+        service-to-service traffic control.
+      </p>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        LESSONS LEARNED
+      </p>
+
+      <h2>
+        Service mesh should be added after the basic traffic model is understood.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Kubernetes networking is layered</h3>
+          <p>
+            A request may pass through multiple objects before reaching a pod.
+            Troubleshooting has to follow that same path.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>A route can exist and still fail</h3>
+          <p>
+            A gateway or virtual service can be present while the backend
+            service, endpoint, or pod is missing or unhealthy.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Namespace mistakes are common</h3>
+          <p>
+            Creating resources in one namespace and checking another can make a
+            working object look missing.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Simple commands help learning</h3>
+          <p>
+            Keeping commands readable makes it easier to understand the platform
+            instead of blindly pasting complex install or troubleshooting steps.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        NEXT PHASE
+      </p>
+
+      <h2>
+        The next phase is a clean, documented working path behind an Istio Gateway.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Planned improvements</h3>
+          <ul>
+            <li>Deploy a sample application behind Istio Gateway.</li>
+            <li>Document the working request path.</li>
+            <li>Add screenshots of resource validation.</li>
+            <li>Compare Traefik ingress and Istio routing side by side.</li>
+            <li>Add observability notes.</li>
+            <li>Build a reusable troubleshooting checklist.</li>
+          </ul>
+        </article>
+
+        <article class="detail-card">
+          <h3>Resume-ready summary</h3>
+          <p>
+            Deployed and troubleshot Kubernetes ingress and Istio service mesh
+            components in a cloud-native lab environment, using Helm, manifests,
+            gateways, services, and routing validation to understand traffic
+            flow, resolve 503 failures, and compare ingress-controller patterns
+            with service mesh architecture.
+          </p>
+        </article>
+
+      </div>
+
+      <div class="project-footer">
+        <a class="button primary" href="/#projects">
+          Back to projects
+        </a>
+
+        <a class="button secondary" href="/projects/goad-security-range.html">
+          Read GOAD case study
+        </a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      © 2026 Paden Gillispie. Built with GitHub and Cloudflare Pages.
+    </p>
+  </footer>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "strict",
+      themeVariables: {
+        darkMode: true,
+        background: "transparent",
+        primaryColor: "#121c22",
+        primaryTextColor: "#e8fff7",
+        primaryBorderColor: "#5ae6b4",
+        lineColor: "#78d2ff",
+        secondaryColor: "#182832",
+        tertiaryColor: "#20313c",
+        fontFamily: "Inter, system-ui, sans-serif",
+        fontSize: "22px"
+      }
+    });
+  </script>
+
+</body>
+</html>

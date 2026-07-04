@@ -371,3 +371,66 @@ footer {
 .mermaid-card pre {
   margin: 0;
 }
+
+/* Mermaid flowchart polish */
+.mermaid-card {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(90, 230, 180, 0.25);
+  border-radius: 14px;
+  background:
+    linear-gradient(135deg, rgba(90, 230, 180, 0.08), rgba(120, 160, 255, 0.05)),
+    rgba(255, 255, 255, 0.04);
+  overflow-x: auto;
+}
+
+.mermaid-card pre {
+  margin: 0;
+}
+
+/* Mermaid rendered SVG */
+.mermaid-card svg {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  font-size: 18px;
+}
+
+/* Node boxes */
+.mermaid-card .node rect,
+.mermaid-card .node polygon,
+.mermaid-card .node path {
+  fill: rgba(18, 28, 34, 0.95) !important;
+  stroke: rgba(90, 230, 180, 0.75) !important;
+  stroke-width: 2px !important;
+}
+
+/* Node text */
+.mermaid-card .nodeLabel,
+.mermaid-card .label,
+.mermaid-card text {
+  fill: #e8fff7 !important;
+  color: #e8fff7 !important;
+  font-size: 18px !important;
+  font-weight: 700 !important;
+}
+
+/* Arrow lines */
+.mermaid-card .edgePath path {
+  stroke: rgba(120, 210, 255, 0.9) !important;
+  stroke-width: 2.5px !important;
+}
+
+/* Arrow labels */
+.mermaid-card .edgeLabel {
+  background-color: rgba(10, 18, 24, 0.9) !important;
+  color: #c9fff1 !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
+}
+
+/* Arrowheads */
+.mermaid-card marker path {
+  fill: rgba(120, 210, 255, 0.9) !important;
+  stroke: rgba(120, 210, 255, 0.9) !important;
+}

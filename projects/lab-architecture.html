@@ -597,6 +597,26 @@ flowchart TB
       }
     });
   </script>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
 
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "strict",
+      themeVariables: {
+        darkMode: true,
+        background: "transparent",
+        primaryColor: "#121c22",
+        primaryTextColor: "#e8fff7",
+        primaryBorderColor: "#5ae6b4",
+        lineColor: "#78d2ff",
+        secondaryColor: "#182832",
+        tertiaryColor: "#20313c",
+        fontFamily: "Inter, system-ui, sans-serif",
+        fontSize: "48px"
+      }
+    });
+  </script>
 </body>
 </html>

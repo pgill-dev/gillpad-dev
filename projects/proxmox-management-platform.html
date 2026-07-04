@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Case study for an internal Proxmox management platform built with Flask, FastAPI, Python, and Proxmox API workflows."
+  >
+
+  <title>Proxmox Management Platform | Gillpad</title>
+
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+  <header class="hero" style="min-height:auto;">
+    <nav aria-label="Primary navigation">
+
+      <a class="logo" href="/">
+        GILLPAD.DEV
+      </a>
+
+      <div class="nav-links">
+        <a href="/#about">About</a>
+        <a href="/#projects">Projects</a>
+        <a href="/#skills">Skills</a>
+        <a href="/#contact">Contact</a>
+      </div>
+
+    </nav>
+  </header>
+
+  <main class="case-study">
+
+    <section class="case-hero">
+
+      <a class="back-link" href="/#projects">
+        ← Back to projects
+      </a>
+
+      <p class="eyebrow">
+        AUTOMATION CASE STUDY
+      </p>
+
+      <h1>
+        Proxmox Management Platform
+      </h1>
+
+      <p class="case-summary">
+        A web-based internal operations tool for managing Proxmox virtual
+        machines, snapshots, notes, and operator workflows through a simple
+        Flask frontend backed by Python automation and Proxmox API operations.
+      </p>
+
+      <div class="case-meta">
+        <span class="tag">Status: Operational</span>
+        <span class="tag">Type: Internal Tooling</span>
+        <span class="tag">Role: Builder / Operator</span>
+        <span class="tag">Focus: Automation</span>
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        PROBLEM
+      </p>
+
+      <h2>
+        Routine VM operations needed to be simpler and safer.
+      </h2>
+
+      <p>
+        Managing virtualization workflows directly through administrative
+        interfaces can create friction for repeatable tasks such as snapshot
+        creation, VM identification, note tracking, and operator handoff. The
+        goal was to create a lightweight internal tool that made common
+        Proxmox operations faster, clearer, and easier to document.
+      </p>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        ARCHITECTURE
+      </p>
+
+      <h2>
+        A lightweight web interface backed by Proxmox API workflows.
+      </h2>
+
+      <div class="mermaid-card">
+        <pre class="mermaid">
+flowchart TD
+  OP[Operator] --> UI[Flask Web Interface]
+  UI --> API[Python Backend Logic]
+  API --> PVE[Proxmox API]
+  PVE --> VM[Virtual Machines]
+  API --> NOTES[Append-Only VM Notes]
+  API --> SNAP[Snapshot Workflow]
+  API --> LIST[VM Inventory / Dropdowns]
+        </pre>
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        ENGINEERING WORK
+      </p>
+
+      <h2>
+        The tool turned repeated admin actions into structured workflows.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>VM inventory</h3>
+          <p>
+            Built dynamic VM listing and dropdown workflows so operators could
+            select systems by cluster, VMID, and name without manually checking
+            every target.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Snapshot operations</h3>
+          <p>
+            Added snapshot creation workflows to support safer change windows,
+            testing, and rollback planning.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Append-only notes</h3>
+          <p>
+            Added VM note workflows designed to preserve operator context and
+            reduce undocumented changes.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Production polish</h3>
+          <p>
+            Moved from rough API testing toward a Flask-based interface with
+            service scripts, UI cleanup, and operational usability in mind.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        VALIDATION
+      </p>
+
+      <h2>
+        The platform was tested against real operational workflows.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Snapshot testing</h3>
+          <p>
+            Verified that the tool could trigger snapshot operations and expose
+            cleanup needs when a workflow affected more systems than intended.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Operator usability</h3>
+          <p>
+            Improved form layout, cluster selection, live VM dropdowns, and
+            service start/stop behavior to make the tool usable outside of a
+            one-off script.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        OUTCOME
+      </p>
+
+      <h2>
+        The project became a practical platform for infrastructure operations.
+      </h2>
+
+      <p>
+        The result was a lightweight management platform that demonstrated
+        Proxmox API integration, Python automation, web interface design,
+        operational safety thinking, and the ability to turn repetitive
+        infrastructure tasks into repeatable workflows.
+      </p>
+
+      <div class="project-footer">
+        <a class="button primary" href="/#projects">
+          Back to projects
+        </a>
+
+        <a class="button secondary" href="/projects/proxmox-recovery.html">
+          Read Proxmox recovery case study
+        </a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      © 2026 Paden Gillispie. Built with GitHub and Cloudflare Pages.
+    </p>
+  </footer>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "strict",
+      themeVariables: {
+        darkMode: true,
+        background: "transparent",
+        primaryColor: "#121c22",
+        primaryTextColor: "#e8fff7",
+        primaryBorderColor: "#5ae6b4",
+        lineColor: "#78d2ff",
+        secondaryColor: "#182832",
+        tertiaryColor: "#20313c",
+        fontFamily: "Inter, system-ui, sans-serif",
+        fontSize: "22px"
+      }
+    });
+  </script>
+
+</body>
+</html>

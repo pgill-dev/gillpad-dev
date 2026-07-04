@@ -231,6 +231,18 @@ footer {
   line-height: 1.5;
 }
 
+.coming-soon-link {
+  background: transparent;
+  color: var(--muted);
+  border-color: var(--border);
+}
+
+.coming-soon-link:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.04);
+}
+
 @media (max-width: 800px) {
   .nav-links {
     display: none;
@@ -248,4 +260,5 @@ footer {
     flex-direction: column;
     align-items: flex-start;
   }
+  
 }

@@ -55,6 +55,35 @@
   .mermaid-card.architecture-mermaid .node path {
     stroke-width: 2.5px !important;
   }
+    .mermaid-card.small-mermaid svg {
+  min-width: 850px;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  font-size: 16px;
+}
+
+.mermaid-card.small-mermaid .nodeLabel,
+.mermaid-card.small-mermaid .label,
+.mermaid-card.small-mermaid text {
+  font-size: 16px !important;
+  font-weight: 800 !important;
+}
+
+.mermaid-card.small-mermaid .edgeLabel {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+}
+
+.mermaid-card.small-mermaid .edgePath path {
+  stroke-width: 2.5px !important;
+}
+
+.mermaid-card.small-mermaid .node rect,
+.mermaid-card.small-mermaid .node polygon,
+.mermaid-card.small-mermaid .node path {
+  stroke-width: 2px !important;
+}
 </style>
 </head>
 
@@ -242,7 +271,7 @@ flowchart TB
         access requires the secure access path.
       </p>
 
-      <div class="mermaid-card">
+      <div class="mermaid-card small-mermaid">
         <pre class="mermaid">
 flowchart LR
   USER[Operator] --> CFA[Cloudflare Access]
@@ -294,7 +323,7 @@ flowchart LR
         recovery validation.
       </p>
 
-      <div class="mermaid-card">
+      <div class="mermaid-card small-mermaid">
         <pre class="mermaid">
 flowchart TB
   PVE[Proxmox VE Platform]

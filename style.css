@@ -151,7 +151,46 @@ section > p {
   border-color: var(--accent);
   transition: 0.2s ease;
 }
+.card span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.4rem;
+  height: 2.4rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  background: rgba(255, 255, 255, 0.05);
+}
 
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.25rem;
+  padding: 0.85rem 1.1rem;
+  border: 1px solid var(--accent);
+  border-radius: 8px;
+  color: var(--background);
+  background: var(--accent);
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.project-link:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.08);
+}
+
+.card p {
+  font-size: 1rem;
+  line-height: 1.7;
+}
 .card span {
   color: var(--accent);
   font-size: 0.9rem;

@@ -77,6 +77,10 @@
           View Projects
         </a>
 
+        <a class="button secondary" href="/projects/lab-architecture.html">
+          View Lab Architecture
+        </a>
+
         <a
           class="button secondary"
           href="https://github.com/pgill-dev"
@@ -140,14 +144,16 @@
       <p class="section-label">
         FEATURED WORK
       </p>
+
       <h2>
         Engineering projects
       </h2>
 
       <p>
-        Featured case studies include secure remote access architecture, ESXi to
-        Proxmox migration with PBS recovery planning, and custom Proxmox operations
-        tooling.
+        Start with the lab architecture overview for the full system map, then
+        review individual case studies for deeper implementation details across
+        secure access, virtualization, automation, security ranges, cloud-native
+        platforms, vulnerability management, and deployment workflows.
       </p>
 
       <div class="project-grid">
@@ -155,6 +161,33 @@
         <article class="card">
 
           <span>01</span>
+
+          <h3>
+            Lab Architecture Overview
+          </h3>
+
+          <p>
+            A layered overview of the home lab architecture showing the public
+            portfolio layer, secure access path, firewall and routing layer,
+            Proxmox virtualization layer, segmented networks, workload groups,
+            and recovery model.
+          </p>
+
+          <p>
+            <strong>Focus:</strong>
+            Lab topology, segmentation, access flow, Proxmox architecture,
+            recovery model, student-friendly system mapping
+          </p>
+
+          <a class="project-link" href="/projects/lab-architecture.html">
+            View architecture →
+          </a>
+
+        </article>
+
+        <article class="card">
+
+          <span>02</span>
 
           <h3>
             Zero Trust Engineering Lab
@@ -175,13 +208,13 @@
 
           <a class="project-link" href="/projects/zero-trust-access.html">
             View case study →
-          </a>  
-            
+          </a>
+
         </article>
 
         <article class="card">
 
-          <span>02</span>
+          <span>03</span>
 
           <h3>
             ESXi to Proxmox Migration
@@ -189,15 +222,16 @@
 
           <p>
             Supported the migration of a cybersecurity lab from VMware ESXi to
-            Proxmox VE and Proxmox Backup Server. The work included VM export
-            and import, storage planning, backup validation, integrity checks,
-            networking, documentation, and recovery procedures.
+            Proxmox VE and Proxmox Backup Server. The work included ESXi
+            compatibility review, VM import, storage planning, backup validation,
+            integrity checks, networking, documentation, and recovery procedures.
           </p>
 
           <p>
             <strong>Technologies:</strong>
             VMware ESXi, Proxmox VE, Proxmox Backup Server, ZFS, Linux
           </p>
+
           <a class="project-link" href="/projects/proxmox-recovery.html">
             View case study →
           </a>
@@ -206,7 +240,7 @@
 
         <article class="card">
 
-          <span>03</span>
+          <span>04</span>
 
           <h3>
             Proxmox Management Platform
@@ -223,32 +257,8 @@
             <strong>Technologies:</strong>
             Python, FastAPI, Flask, Proxmox API, HTML, CSS, Git
           </p>
+
           <a class="project-link" href="/projects/proxmox-management-platform.html">
-            View case study →
-          </a>
-          
-        </article>
-
-        <article class="card">
-
-          <span>04</span>
-
-          <h3>
-            GOAD Security Range
-          </h3>
-
-          <p>
-            Built an isolated Active Directory attack-and-defense range using
-            Game of Active Directory. The environment is separated from trusted
-            networks through a dedicated Proxmox bridge and controlled
-            management path.
-          </p>
-
-          <p>
-            <strong>Technologies:</strong>
-            GOAD, Active Directory, Terraform, Ansible, Proxmox, Linux
-          </p>
-          <a class="project-link" href="/projects/goad-security-range.html">
             View case study →
           </a>
 
@@ -257,6 +267,31 @@
         <article class="card">
 
           <span>05</span>
+
+          <h3>
+            GOAD Security Range
+          </h3>
+
+          <p>
+            Built the foundation for an isolated Active Directory attack-and-defense
+            range using Game of Active Directory, Terraform, clean VM baselines,
+            dedicated Proxmox networking, and a controlled management path.
+          </p>
+
+          <p>
+            <strong>Technologies:</strong>
+            GOAD, Active Directory, Terraform, Ansible, Proxmox, Linux
+          </p>
+
+          <a class="project-link" href="/projects/goad-security-range.html">
+            View case study →
+          </a>
+
+        </article>
+
+        <article class="card">
+
+          <span>06</span>
 
           <h3>
             Kubernetes and Service Mesh Engineering
@@ -273,15 +308,16 @@
             <strong>Technologies:</strong>
             Kubernetes, Istio, Helm, Traefik, Argo CD, YAML
           </p>
+
           <a class="project-link" href="/projects/kubernetes-service-mesh.html">
             View case study →
           </a>
-          
+
         </article>
 
         <article class="card">
 
-          <span>06</span>
+          <span>07</span>
 
           <h3>
             Daedalus
@@ -300,6 +336,7 @@
             AI-assisted engineering, documentation, IaC, validation,
             human-controlled automation
           </p>
+
           <a class="project-link coming-soon-link" href="/projects/coming-soon.html">
             Case study coming soon →
           </a>
@@ -308,7 +345,7 @@
 
         <article class="card">
 
-          <span>07</span>
+          <span>08</span>
 
           <h3>
             Vulnerability and Compliance Engineering
@@ -325,6 +362,7 @@
             <strong>Technologies:</strong>
             Rapid7, ACAS, Nessus, CIS Benchmarks, DISA STIGs
           </p>
+
           <a class="project-link" href="/projects/vulnerability-compliance-engineering.html">
             View case study →
           </a>
@@ -333,7 +371,7 @@
 
         <article class="card">
 
-          <span>08</span>
+          <span>09</span>
 
           <h3>
             Gillpad Deployment Pipeline
@@ -350,6 +388,7 @@
             <strong>Technologies:</strong>
             GitHub, Cloudflare Pages, DNS, TLS, HTML, CSS
           </p>
+
           <a class="project-link" href="/projects/gillpad-deployment-pipeline.html">
             View case study →
           </a>
@@ -383,7 +422,7 @@
             Windows Server, Active Directory, virtualization, storage,
             networking, backup, and recovery.
           </p>
-          
+
         </article>
 
         <article class="card">
@@ -473,7 +512,7 @@
         <article class="card">
           <h3>CompTIA</h3>
           <p>
-            A+ · Network+ · Security+ · CySA+ · SECx · Project+
+            A+ · Network+ · Security+ · CySA+ · SecurityX · Project+
           </p>
         </article>
 
@@ -485,7 +524,7 @@
         </article>
 
         <article class="card">
-          <h3>International Information System Security Certification Consortium (ISC2)</h3>
+          <h3>ISC2</h3>
           <p>
            SSCP
           </p>
@@ -528,7 +567,7 @@
         >
           GitHub
         </a>
-        
+
         <a
           class="button secondary"
           href="https://www.linkedin.com/in/paden-gillispie/"
@@ -545,6 +584,10 @@
           rel="noopener noreferrer"
         >
           Resume
+        </a>
+
+        <a class="button secondary" href="/projects/lab-architecture.html">
+          Lab Architecture
         </a>
 
       </div>
@@ -567,3 +610,4 @@
 
 </body>
 </html>
+

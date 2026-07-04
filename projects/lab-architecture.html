@@ -133,78 +133,33 @@
       </p>
 
       <div class="mermaid-card architecture-mermaid">
-        <pre class="mermaid">
-flowchart TB
+  <pre class="mermaid">
+flowchart LR
 
   USER[Visitor / Student / Operator]
 
-  subgraph PUBLIC["Public Presentation Layer"]
-    SITE[Gillpad.dev<br/>Cloudflare Pages]
-  end
+  PUBLIC[Public Presentation Layer<br/>Gillpad.dev / Cloudflare Pages]
 
-  subgraph ACCESS["Secure Remote Access Layer"]
-    CFA[Cloudflare Access]
-    TUN[Cloudflare Tunnel]
-    GUAC[Apache Guacamole]
-    BAST[Bastion / Jump Box VM]
-  end
+  ACCESS[Secure Remote Access Layer<br/>Cloudflare Access / Tunnel / Guacamole / Bastion]
 
-  subgraph CORE["Core Infrastructure Layer"]
-    OPN[OPNsense Firewall]
-    PVE[Proxmox VE Platform]
-    PBS[Proxmox Backup Server]
-    MGMT[Management / Automation VM]
-  end
+  CORE[Core Infrastructure Layer<br/>OPNsense / Proxmox VE / PBS / Management VM]
 
-  subgraph SEGMENTS["Virtual Network Segments"]
-    MGTNET[Management Segment]
-    SVCNET[Internal Services Segment]
-    RNGNET[Security Range Segment]
-  end
+  SEGMENTS[Virtual Network Segments<br/>Management / Internal Services / Security Range]
 
-  subgraph LABS["Lab Workload Layer"]
-    TOOL[Proxmox Management Platform]
-    K8S[Kubernetes / Istio Lab]
-    GOAD[GOAD Active Directory Range]
-    MAL[Malware / Sandbox Lab]
-    GEN[General Linux / Windows VMs]
-  end
+  WORKLOADS[Lab Workload Layer<br/>GOAD / Kubernetes / Sandbox / General VMs / Tooling]
 
-  subgraph OPS["Operations / Recovery Layer"]
-    BACKUP[Backups / Verification]
-    SNAP[Snapshots / Rebuilds]
-    DOCS[Runbooks / Documentation]
-  end
+  OPS[Operations and Recovery Layer<br/>Backups / Verification / Snapshots / Runbooks]
 
-  USER -->|Public portfolio| SITE
-  USER -->|Private lab access| CFA
+  USER -->|Public website| PUBLIC
+  USER -->|Private lab access| ACCESS
 
-  CFA --> TUN
-  TUN --> GUAC
-  GUAC --> BAST
-
-  BAST --> MGMT
-  BAST --> PVE
-  BAST --> OPN
-
-  OPN --> SEGMENTS
-  PVE --> SEGMENTS
-
-  MGTNET --> TOOL
-  MGTNET --> MGMT
-
-  SVCNET --> K8S
-  SVCNET --> MAL
-  SVCNET --> GEN
-
-  RNGNET --> GOAD
-
-  PVE --> PBS
-  PBS --> BACKUP
-  LABS --> SNAP
-  MGMT --> DOCS
-        </pre>
-      </div>
+  ACCESS --> CORE
+  CORE --> SEGMENTS
+  SEGMENTS --> WORKLOADS
+  WORKLOADS --> OPS
+  CORE --> OPS
+  </pre>
+</div>
 
     </section>
 

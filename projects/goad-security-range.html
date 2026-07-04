@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Case study for a segmented GOAD Active Directory security range built in Proxmox with Terraform, clean VM baselines, isolated networking, and recovery-focused workflows."
+  >
+
+  <title>GOAD Security Range | Gillpad</title>
+
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+  <header class="hero" style="min-height:auto;">
+    <nav aria-label="Primary navigation">
+
+      <a class="logo" href="/">
+        GILLPAD.DEV
+      </a>
+
+      <div class="nav-links">
+        <a href="/#about">About</a>
+        <a href="/#projects">Projects</a>
+        <a href="/#skills">Skills</a>
+        <a href="/#contact">Contact</a>
+      </div>
+
+    </nav>
+  </header>
+
+  <main class="case-study">
+
+    <section class="case-hero">
+
+      <a class="back-link" href="/#projects">
+        ← Back to projects
+      </a>
+
+      <p class="eyebrow">
+        SECURITY RANGE CASE STUDY
+      </p>
+
+      <h1>
+        GOAD Security Range
+      </h1>
+
+      <p class="case-summary">
+        A segmented Active Directory attack-and-defense lab built to support
+        hands-on security testing, Windows domain practice, adversary emulation,
+        and defensive validation inside an isolated Proxmox network. The project
+        focused on deploying intentionally vulnerable infrastructure safely by
+        preparing clean VM baselines, using Terraform-driven provisioning, and
+        keeping the range separated from normal home lab and management systems.
+      </p>
+
+      <div class="case-meta">
+        <span class="tag">Status: In Progress</span>
+        <span class="tag">Type: Security Range</span>
+        <span class="tag">Role: Architect / Operator</span>
+        <span class="tag">Focus: Terraform and Segmentation</span>
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        PROBLEM
+      </p>
+
+      <h2>
+        Vulnerable Active Directory labs need containment before exploitation.
+      </h2>
+
+      <p>
+        Hands-on Active Directory security practice requires realistic Windows
+        domain infrastructure, but intentionally vulnerable environments cannot
+        be treated like normal lab workloads. A GOAD-style lab introduces domain
+        controllers, Windows servers, Linux support systems, insecure
+        configurations, and attacker-accessible paths by design.
+      </p>
+
+      <p>
+        The challenge was not just deploying GOAD. The environment needed proper
+        baselines before deployment, clean VM images that Terraform could use
+        consistently, and a segmented Proxmox network that kept vulnerable
+        systems boxed off from the rest of the lab.
+      </p>
+
+      <p>
+        This project became a practical introduction to infrastructure-as-code
+        state management. Terraform was used to define and create lab resources,
+        which meant the deployment process depended on clean configuration,
+        predictable VM templates, and an understanding of how Terraform tracks
+        resource state over time.
+      </p>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        ARCHITECTURE
+      </p>
+
+      <h2>
+        Terraform defines the range, Proxmox hosts it, and an isolated bridge contains it.
+      </h2>
+
+      <div class="mermaid-card">
+        <pre class="mermaid">
+flowchart TD
+  OP[Operator] --> TF[Terraform Configuration]
+  TF --> API[Proxmox Provider / API]
+  API --> IMG[Clean VM Baseline Images]
+  IMG --> BRIDGE[Isolated Proxmox Bridge]
+  BRIDGE --> RANGE[GOAD Lab Network]
+  RANGE --> DC[Domain Controllers]
+  RANGE --> WIN[Windows Servers]
+  RANGE --> LNX[Linux Support Systems]
+  DC --> TEST[Attack, Validate, Revert, Rebuild]
+  WIN --> TEST
+  LNX --> TEST
+        </pre>
+      </div>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Contained lab network</h3>
+          <p>
+            GOAD systems were planned around a dedicated Proxmox bridge and
+            distinct addressing space so vulnerable domain assets remained
+            separated from normal lab services.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Controlled deployment path</h3>
+          <p>
+            Terraform and a deployment host became the controlled path for
+            creating, adjusting, and rebuilding the lab instead of relying on
+            unmanaged manual VM creation.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        INFRASTRUCTURE AS CODE MODEL
+      </p>
+
+      <h2>
+        Terraform introduced a state-driven operating model.
+      </h2>
+
+      <p>
+        Terraform was used as the deployment layer for the lab environment. This
+        introduced a different operating model than manually creating each VM in
+        the Proxmox interface. Instead of treating VM creation as a one-off click
+        path, the lab required declarative configuration files, known baseline
+        images, consistent VMIDs, network mappings, and Terraform state tracking.
+      </p>
+
+      <div class="mermaid-card">
+        <pre class="mermaid">
+flowchart LR
+  CFG[Desired Configuration] --> PLAN[Terraform Plan]
+  STATE[Terraform State] --> PLAN
+  REAL[Existing Proxmox Resources] --> PLAN
+  PLAN --> APPLY[Terraform Apply]
+  APPLY --> PVE[Proxmox VM Resources]
+  APPLY --> STATE2[Updated Terraform State]
+        </pre>
+      </div>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Desired configuration</h3>
+          <p>
+            Terraform files described what the lab should look like, including
+            VM definitions, identifiers, network placement, image sources, and
+            deployment parameters.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Terraform state</h3>
+          <p>
+            Terraform state tracked what had already been created. Understanding
+            state was necessary to know when a change would update, recreate, or
+            fail against real Proxmox resources.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Baseline dependency</h3>
+          <p>
+            The deployment depended on clean VM baselines. If the source image
+            was not prepared correctly, Terraform could create broken or
+            inconsistent systems at scale.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Repeatable deployment</h3>
+          <p>
+            The long-term goal was a rebuildable range: define the lab, deploy
+            the lab, test inside the lab, and tear down or rebuild with less
+            manual drift.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        BASELINE PREPARATION
+      </p>
+
+      <h2>
+        Clean images had to exist before automated deployment could be trusted.
+      </h2>
+
+      <p>
+        Before deploying the lab, the environment needed proper baseline images.
+        This became a required step rather than an optional cleanup task. A clean
+        image gives Terraform something predictable to clone or build from.
+        Without that baseline, every downstream system can inherit problems from
+        the template: wrong drivers, bad networking, leftover configuration,
+        missing guest tools, or inconsistent authentication settings.
+      </p>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Clean image requirements</h3>
+          <p>
+            Baseline images needed validated operating system installs, virtual
+            hardware behavior, network readiness, and settings required for
+            Proxmox-based management.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Deployment consistency</h3>
+          <p>
+            Once a clean image existed, Terraform could use it as a repeatable
+            starting point and reduce one-off manual differences between GOAD
+            systems.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Failure reduction</h3>
+          <p>
+            A bad baseline creates repeated failures. Fixing the baseline first
+            helped prevent the same issue from being copied into every deployed
+            system.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Recovery support</h3>
+          <p>
+            Clean baselines also supported the recovery model. If the range was
+            broken during testing, systems could be reverted or rebuilt from a
+            known-good starting point.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        SECURITY CONTROLS
+      </p>
+
+      <h2>
+        The range was treated as unsafe infrastructure by design.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Isolated bridge</h3>
+          <p>
+            The GOAD network was built around a dedicated Proxmox bridge instead
+            of sharing the normal management network. This created a clear
+            boundary between intentionally vulnerable systems and the rest of the lab.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Separate addressing</h3>
+          <p>
+            The environment used a distinct address space for the security range,
+            making it easier to identify GOAD assets, document the environment,
+            and avoid accidental overlap with existing systems.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Controlled management path</h3>
+          <p>
+            Administration and deployment were performed through a management or
+            deployment VM rather than giving every vulnerable workload direct
+            access to the broader lab.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Terraform-controlled deployment</h3>
+          <p>
+            Terraform was used to reduce manual drift and make the lab more
+            repeatable. Configuration files became the deployment source of
+            truth instead of relying only on manual Proxmox changes.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Baseline image control</h3>
+          <p>
+            Clean VM images were treated as a prerequisite. The security range
+            needed known-good deployment sources before vulnerable workloads were
+            created.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Snapshot and rebuild readiness</h3>
+          <p>
+            Because GOAD is designed for testing, the environment needed a
+            recovery model that supported breaking, reverting, and rebuilding
+            systems without affecting unrelated lab services.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        ENGINEERING WORK
+      </p>
+
+      <h2>
+        The build required networking, baselines, Terraform configuration, and state awareness.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Proxmox network preparation</h3>
+          <p>
+            Created a dedicated virtual bridge for the GOAD security range and
+            planned the lab around a separate network boundary to keep vulnerable
+            domain infrastructure off the main lab network.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>VMID planning</h3>
+          <p>
+            Reserved a separate VMID range for GOAD systems so the environment
+            could stay organized and easy to distinguish from other lab workloads.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Clean baseline image creation</h3>
+          <p>
+            Prepared clean images for deployment so Terraform could create
+            systems from a predictable starting point and reduce repeated
+            configuration errors.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Terraform configuration</h3>
+          <p>
+            Reviewed and adjusted Terraform configuration files for Linux and
+            Windows systems, including VM identifiers, network settings,
+            template references, and environment-specific values.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Terraform state learning</h3>
+          <p>
+            Worked through the relationship between Terraform configuration,
+            Terraform state, and the real Proxmox environment. State became a
+            key learning point because it controls how Terraform understands
+            what already exists and what needs to change.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Deployment host setup</h3>
+          <p>
+            Prepared a Linux-based management or deployment VM to support GOAD
+            automation, configuration editing, Terraform execution, and build
+            operations.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        VALIDATION
+      </p>
+
+      <h2>
+        Validation focused on containment, consistency, and rebuildability.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Network validation</h3>
+          <p>
+            Confirmed that GOAD systems landed on the intended isolated bridge
+            and addressing space, preventing a vulnerable AD lab from appearing
+            on the normal lab network.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Baseline validation</h3>
+          <p>
+            Validated clean images before deployment so downstream systems would
+            inherit a known-good starting point rather than repeated template
+            problems.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Terraform validation</h3>
+          <p>
+            Reviewed Terraform configuration before deployment to confirm VMIDs,
+            network mappings, template references, and environment values were correct.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>State validation</h3>
+          <p>
+            Treated Terraform state as part of the deployment workflow and
+            learned how state drift or incorrect assumptions about existing
+            resources can cause confusion during rebuilds or changes.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Isolation validation</h3>
+          <p>
+            Treated the range as separate from the rest of the lab. GOAD assets
+            could communicate inside the range while access into and out of the
+            range remained controlled.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Recovery validation</h3>
+          <p>
+            Designed for breakability. The workflow emphasized the ability to
+            revert, rebuild, or redeploy rather than preserve every system as a
+            permanent production workload.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        OUTCOME
+      </p>
+
+      <h2>
+        The project created the foundation for a safer, repeatable AD security range.
+      </h2>
+
+      <p>
+        The GOAD project established the foundation for an isolated,
+        Terraform-driven Active Directory security range inside Proxmox. Instead
+        of placing vulnerable domain systems directly into the normal lab, the
+        environment was designed around segmentation, clean baselines,
+        declarative deployment, VM organization, and recovery planning.
+      </p>
+
+      <p>
+        The project also created a practical learning path for Terraform in a
+        real infrastructure context. Terraform configuration and state became
+        part of the deployment process, while clean images and network baselines
+        became prerequisites for reliable automation.
+      </p>
+
+      <p>
+        The result is a safer and more repeatable path for hands-on security
+        testing, AD exploitation practice, defensive validation, and
+        student-style lab demonstrations without mixing intentionally vulnerable
+        systems with core infrastructure.
+      </p>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        LESSONS LEARNED
+      </p>
+
+      <h2>
+        A security range is still infrastructure.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Baselines come before automation</h3>
+          <p>
+            Terraform can automate deployment, but it cannot fix a bad source
+            image. Clean baselines are a prerequisite for reliable infrastructure automation.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Terraform state matters</h3>
+          <p>
+            Terraform state is how Terraform understands what exists, what
+            changed, and what it should do next. Learning that relationship was
+            a major part of this project.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Segmentation comes before exploitation</h3>
+          <p>
+            The first priority was not launching attacks or testing tools. The
+            first priority was making sure the lab was placed in the right network boundary.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Rebuildability matters</h3>
+          <p>
+            Security ranges should be easy to reset. If a lab cannot be safely
+            broken and rebuilt, it becomes harder to use for real testing.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        NEXT PHASE
+      </p>
+
+      <h2>
+        Complete deployment, validate the domain, and document controlled attack paths.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Planned improvements</h3>
+          <ul>
+            <li>Domain controller validation.</li>
+            <li>Windows host validation.</li>
+            <li>Terraform cleanup and repeatable deployment testing.</li>
+            <li>Snapshot and revert workflow.</li>
+            <li>Attack path documentation.</li>
+            <li>Detection and logging notes.</li>
+            <li>Student and demo-safe walkthroughs.</li>
+          </ul>
+        </article>
+
+        <article class="detail-card">
+          <h3>Resume-ready summary</h3>
+          <p>
+            Designed and deployed the foundation for a segmented GOAD Active
+            Directory security range inside Proxmox using Terraform, clean VM
+            baselines, an isolated virtual bridge, dedicated addressing,
+            controlled management access, and recovery-focused workflows to
+            support safe adversary emulation, Windows domain testing, and
+            defensive validation without exposing core lab infrastructure.
+          </p>
+        </article>
+
+      </div>
+
+      <div class="project-footer">
+        <a class="button primary" href="/#projects">
+          Back to projects
+        </a>
+
+        <a class="button secondary" href="/projects/proxmox-management-platform.html">
+          Read Proxmox Management case study
+        </a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      © 2026 Paden Gillispie. Built with GitHub and Cloudflare Pages.
+    </p>
+  </footer>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "strict",
+      themeVariables: {
+        darkMode: true,
+        background: "transparent",
+        primaryColor: "#121c22",
+        primaryTextColor: "#e8fff7",
+        primaryBorderColor: "#5ae6b4",
+        lineColor: "#78d2ff",
+        secondaryColor: "#182832",
+        tertiaryColor: "#20313c",
+        fontFamily: "Inter, system-ui, sans-serif",
+        fontSize: "22px"
+      }
+    });
+  </script>
+
+</body>
+</html>

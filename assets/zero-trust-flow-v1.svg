@@ -1,0 +1,11 @@
+<figure class="project-image">
+  <img
+    src="/assets/zero-trust-flow-v1.svg"
+    alt="Zero Trust remote access architecture flowchart"
+    loading="lazy"
+  >
+
+  <figcaption>
+    Logical access flow from Cloudflare Access through Guacamole into segmented internal systems.
+  </figcaption>
+</figure>

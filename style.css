@@ -305,3 +305,57 @@ footer {
   }
   
 }
+/* Coming soon page polish */
+.case-study {
+  width: min(1120px, calc(100% - 3rem));
+  margin: 0 auto;
+}
+
+.case-hero {
+  padding: 4rem 0 3rem;
+}
+
+.case-hero .case-summary {
+  max-width: 760px;
+}
+
+.case-section {
+  padding: 3rem 0;
+}
+
+.two-column {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.detail-card {
+  padding: 1.35rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.detail-card h3 {
+  margin-bottom: 0.5rem;
+  font-size: 1.15rem;
+}
+
+.detail-card p {
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.project-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 760px) {
+  .two-column {
+    grid-template-columns: 1fr;
+  }
+}

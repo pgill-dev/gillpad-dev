@@ -393,7 +393,7 @@ footer {
   width: 100%;
   max-width: 100%;
   height: auto;
-  font-size: 18px;
+  font-size: 22px; 
 }
 
 /* Node boxes */
@@ -411,22 +411,22 @@ footer {
 .mermaid-card text {
   fill: #e8fff7 !important;
   color: #e8fff7 !important;
-  font-size: 18px !important;
-  font-weight: 700 !important;
+  font-size: 22px !important;
+  font-weight: 800 !important;
 }
 
 /* Arrow lines */
 .mermaid-card .edgePath path {
   stroke: rgba(120, 210, 255, 0.9) !important;
-  stroke-width: 2.5px !important;
+  stroke-width: 3px !important;
 }
 
 /* Arrow labels */
 .mermaid-card .edgeLabel {
   background-color: rgba(10, 18, 24, 0.9) !important;
   color: #c9fff1 !important;
-  font-size: 15px !important;
-  font-weight: 700 !important;
+  font-size: 17px !important;
+  font-weight: 800 !important;
 }
 
 /* Arrowheads */

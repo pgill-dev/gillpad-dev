@@ -10,10 +10,10 @@
 
   <meta
     name="description"
-    content="Case study for Proxmox recovery, stabilization, backup validation, and lab migration work."
+    content="Case study for migrating VMware ESXi workloads into Proxmox VE and protecting them with Proxmox Backup Server."
   >
 
-  <title>Proxmox Recovery and Migration | Gillpad</title>
+  <title>ESXi to Proxmox Migration and PBS Recovery | Gillpad</title>
 
   <link rel="stylesheet" href="/style.css">
 </head>
@@ -50,20 +50,22 @@
       </p>
 
       <h1>
-        Proxmox Recovery and Migration
+        ESXi to Proxmox Migration and PBS Recovery
       </h1>
 
       <p class="case-summary">
-        Recovery, stabilization, and migration work for a virtualization lab
-        environment built around Proxmox VE, Proxmox Backup Server, ZFS-backed
-        storage, and repeatable validation steps.
+        Migration and recovery planning for a legacy VMware ESXi lab environment
+        moving into Proxmox VE with Proxmox Backup Server. The work focused on
+        understanding ESXi compatibility limits, moving virtual machines into a
+        Proxmox-managed state, validating backups in PBS, and documenting a
+        repeatable recovery path.
       </p>
 
       <div class="case-meta">
         <span class="tag">Status: Completed</span>
         <span class="tag">Type: Infrastructure Migration</span>
         <span class="tag">Role: Operator / Engineer</span>
-        <span class="tag">Focus: Recovery and Validation</span>
+        <span class="tag">Focus: Migration and Recovery</span>
       </div>
 
     </section>
@@ -75,16 +77,54 @@
       </p>
 
       <h2>
-        The lab needed a stable virtualization and backup foundation.
+        The lab needed to move from ESXi into a Proxmox-backed recovery model.
       </h2>
 
       <p>
-        The environment required a more recoverable platform for virtual
-        machines, lab workloads, and cybersecurity training infrastructure.
-        The work focused on stabilizing host access, validating backup paths,
-        improving recoverability, and supporting migration from legacy
-        virtualization workflows into Proxmox-based operations.
+        The lab environment included virtual machines running under VMware ESXi,
+        while the target recovery platform was Proxmox Backup Server. PBS
+        integrates cleanly with Proxmox VE, but it does not directly back up
+        standalone ESXi workloads in the same native way. That created a
+        migration and compatibility problem: the virtual machines first had to
+        be inventoried, exported or imported, validated under Proxmox VE, and
+        only then protected through PBS.
       </p>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        COMPATIBILITY CONSTRAINT
+      </p>
+
+      <h2>
+        PBS protected the Proxmox side of the environment, not ESXi directly.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>ESXi source environment</h3>
+          <p>
+            Existing workloads were running under VMware ESXi, which required VM
+            inventory, snapshot review, power-state checks, export/import
+            planning, and validation before the systems could be treated as
+            Proxmox-managed workloads.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>PBS target environment</h3>
+          <p>
+            Proxmox Backup Server was used as the recovery platform after
+            workloads were brought under Proxmox VE management. This made backup
+            validation, datastore organization, and restore planning part of the
+            migration workflow rather than a separate afterthought.
+          </p>
+        </article>
+
+      </div>
 
     </section>
 
@@ -95,19 +135,21 @@
       </p>
 
       <h2>
-        Proxmox VE for compute, Proxmox Backup Server for recovery.
+        ESXi was the source, Proxmox VE became the platform, and PBS became the recovery layer.
       </h2>
 
       <div class="mermaid-card">
-      <pre class="mermaid">
-        flowchart TD
-          VM[Virtual Machines] --> PVE[Proxmox VE Host]
-          PVE -->|Scheduled / manual backup| PBS[Proxmox Backup Server]
-          PBS -->|Datastore storage| DS[PBS Datastore]
-          DS -->|Integrity check| VERIFY[Backup Verification]
-          VERIFY -->|Restore point available| RESTORE[Restore / Recovery Workflow]
-          RESTORE --> PVE
-      </pre>
+        <pre class="mermaid">
+flowchart TD
+  ESXI[VMware ESXi Source Host] --> INV[VM Inventory and Compatibility Review]
+  INV --> SNAP[Snapshot and Power-State Cleanup]
+  SNAP --> EXPORT[Export or Import VM Workload]
+  EXPORT --> PVE[Proxmox VE Target Host]
+  PVE --> VALIDATE[Boot, Driver, Network, and Storage Validation]
+  VALIDATE --> PBS[Proxmox Backup Server]
+  PBS --> VERIFY[Backup Verification]
+  VERIFY --> RECOVER[Restore and Recovery Readiness]
+        </pre>
       </div>
 
     </section>
@@ -119,40 +161,119 @@
       </p>
 
       <h2>
-        Recovery was treated as an operational workflow, not a one-time task.
+        Migration was treated as a validation workflow, not just a file move.
       </h2>
 
       <div class="two-column">
 
         <article class="detail-card">
+          <h3>ESXi inventory</h3>
+          <p>
+            Identified source workloads, VM names, power states, storage
+            placement, networking requirements, and migration readiness before
+            moving systems into the Proxmox environment.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Snapshot cleanup</h3>
+          <p>
+            Reviewed and removed legacy snapshot conditions that could interfere
+            with clean export, import, backup, or validation workflows.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Proxmox validation</h3>
+          <p>
+            Validated imported workloads under Proxmox VE, including boot
+            behavior, virtual hardware compatibility, storage attachment, and
+            network reachability.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>PBS protection</h3>
+          <p>
+            Added migrated workloads to the Proxmox Backup Server workflow and
+            confirmed backup completion, datastore visibility, and verification
+            status.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        VALIDATION
+      </p>
+
+      <h2>
+        Migration was not complete until the workload could be backed up and verified.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Import validation</h3>
+          <ul>
+            <li>Confirm VM appears under Proxmox VE.</li>
+            <li>Confirm expected virtual disks are attached.</li>
+            <li>Confirm VM can boot or reach a known-good stopped state.</li>
+            <li>Confirm network configuration is understood before production use.</li>
+          </ul>
+        </article>
+
+        <article class="detail-card">
           <h3>Backup validation</h3>
+          <ul>
+            <li>Run backup into the PBS datastore.</li>
+            <li>Confirm backup artifact appears under the expected VM ID.</li>
+            <li>Run or confirm verification status.</li>
+            <li>Document restore path and operational notes.</li>
+          </ul>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        RECOVERY MODEL
+      </p>
+
+      <h2>
+        The recovery path became Proxmox-native after migration.
+      </h2>
+
+      <p>
+        Instead of treating PBS as a direct ESXi backup tool, the workflow moved
+        systems into Proxmox VE first. Once the workloads were Proxmox-managed,
+        PBS could be used for backup scheduling, datastore organization,
+        verification, and restore readiness.
+      </p>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Before migration</h3>
           <p>
-            Verified that backups completed successfully and that backup
-            artifacts appeared in the expected datastore paths.
+            ESXi workloads required separate handling, compatibility review, and
+            migration planning before they could participate in the Proxmox
+            backup workflow.
           </p>
         </article>
 
         <article class="detail-card">
-          <h3>Migration support</h3>
+          <h3>After migration</h3>
           <p>
-            Supported VM movement from legacy virtualization workflows into
-            Proxmox-based management and backup operations.
-          </p>
-        </article>
-
-        <article class="detail-card">
-          <h3>Failure troubleshooting</h3>
-          <p>
-            Diagnosed host, VM, storage, and virtualization issues encountered
-            during backup and migration testing.
-          </p>
-        </article>
-
-        <article class="detail-card">
-          <h3>Documentation</h3>
-          <p>
-            Captured operational steps, recovery checks, naming conventions,
-            validation notes, and lessons learned for future operators.
+            Proxmox-managed workloads could be backed up into PBS, verified, and
+            included in a repeatable recovery process.
           </p>
         </article>
 
@@ -167,13 +288,15 @@
       </p>
 
       <h2>
-        The environment gained a clearer recovery path.
+        The migration clarified the boundary between ESXi, Proxmox VE, and PBS.
       </h2>
 
       <p>
-        The work improved confidence in the lab’s backup and recovery posture
-        by validating the platform, documenting the operational path, and
-        creating a repeatable process for future VM protection and migration.
+        The migration work clarified the boundary between ESXi, Proxmox VE, and
+        Proxmox Backup Server. Instead of treating PBS as a direct ESXi backup
+        tool, the workflow moved systems into Proxmox management first, then
+        protected them through PBS. This created a cleaner operating model for
+        future lab recovery, backup validation, and VM lifecycle management.
       </p>
 
       <div class="project-footer">
@@ -195,6 +318,7 @@
       © 2026 Paden Gillispie. Built with GitHub and Cloudflare Pages.
     </p>
   </footer>
+
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
 
@@ -216,5 +340,6 @@
       }
     });
   </script>
+
 </body>
 </html>

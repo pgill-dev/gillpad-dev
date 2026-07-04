@@ -10,49 +10,56 @@
 
   <meta
     name="description"
-    content="Layered architecture overview for the Gillpad home lab, including public access, Zero Trust ingress, Proxmox virtualization, network segmentation, workloads, and recovery operations."
+    content="Layered architecture overview for the Gillpad self-hosted infrastructure, security, automation, and lab environment."
   >
+
+  <meta name="author" content="Paden Gillispie">
 
   <title>Lab Architecture Overview | Gillpad</title>
 
   <link rel="stylesheet" href="/style.css">
+
   <style>
-  .mermaid-card.architecture-mermaid {
-    margin: 3rem auto;
-    padding: 2.5rem;
-    width: min(1500px, 100%);
-  }
+    /*
+      Page-specific Mermaid sizing.
+      This only affects diagrams on the Lab Architecture page.
+    */
+    .mermaid-card.architecture-mermaid {
+      margin: 3rem auto;
+      padding: 2.5rem;
+      width: min(1400px, 100%);
+    }
 
-  .mermaid-card.architecture-mermaid svg {
-    min-width: 2200px;
-    width: 100%;
-    max-width: none;
-    height: auto;
-    font-size: 42px;
-  }
+    .mermaid-card.architecture-mermaid svg {
+      min-width: 1400px;
+      width: 100%;
+      max-width: none;
+      height: auto;
+      font-size: 32px;
+    }
 
-  .mermaid-card.architecture-mermaid .nodeLabel,
-  .mermaid-card.architecture-mermaid .label,
-  .mermaid-card.architecture-mermaid text {
-    font-size: 42px !important;
-    font-weight: 800 !important;
-  }
+    .mermaid-card.architecture-mermaid .nodeLabel,
+    .mermaid-card.architecture-mermaid .label,
+    .mermaid-card.architecture-mermaid text {
+      font-size: 32px !important;
+      font-weight: 800 !important;
+    }
 
-  .mermaid-card.architecture-mermaid .edgeLabel {
-    font-size: 28px !important;
-    font-weight: 800 !important;
-  }
+    .mermaid-card.architecture-mermaid .edgeLabel {
+      font-size: 22px !important;
+      font-weight: 800 !important;
+    }
 
-  .mermaid-card.architecture-mermaid .edgePath path {
-    stroke-width: 4px !important;
-  }
+    .mermaid-card.architecture-mermaid .edgePath path {
+      stroke-width: 4px !important;
+    }
 
-  .mermaid-card.architecture-mermaid .node rect,
-  .mermaid-card.architecture-mermaid .node polygon,
-  .mermaid-card.architecture-mermaid .node path {
-    stroke-width: 3px !important;
-  }
-</style>
+    .mermaid-card.architecture-mermaid .node rect,
+    .mermaid-card.architecture-mermaid .node polygon,
+    .mermaid-card.architecture-mermaid .node path {
+      stroke-width: 3px !important;
+    }
+  </style>
 </head>
 
 <body>
@@ -83,25 +90,26 @@
       </a>
 
       <p class="eyebrow">
-        LAB SYSTEM MAP
+        LAB ARCHITECTURE OVERVIEW
       </p>
 
       <h1>
-        Lab Architecture Overview
+        Layered Home Lab Architecture
       </h1>
 
       <p class="case-summary">
-        A layered overview of the Gillpad engineering lab showing how public
-        presentation, secure remote access, firewalling, Proxmox virtualization,
-        segmented networks, workload groups, and recovery operations fit
-        together without exposing private infrastructure details.
+        A high-level view of the Gillpad infrastructure lab, showing how the
+        public portfolio, secure remote access path, Proxmox virtualization
+        layer, network segmentation, lab workloads, and recovery model fit
+        together without exposing private IP addresses or sensitive internal
+        details.
       </p>
 
       <div class="case-meta">
         <span class="tag">Status: Operational</span>
         <span class="tag">Type: Architecture Overview</span>
         <span class="tag">Role: Architect / Operator</span>
-        <span class="tag">Focus: Segmentation and Recoverability</span>
+        <span class="tag">Focus: Segmentation and Recovery</span>
       </div>
 
     </section>
@@ -109,70 +117,52 @@
     <section class="case-section">
 
       <p class="section-label">
-        PURPOSE
+        HIGH-LEVEL DESIGN
       </p>
 
       <h2>
-        The lab is designed as a layered engineering environment, not a flat pile of VMs.
+        The lab is organized as layered infrastructure, not one flat network.
       </h2>
 
       <p>
-        The environment supports infrastructure engineering, security testing,
-        cloud-native experiments, automation, vulnerability management, and
-        student-style demonstrations. The architecture separates the public
-        portfolio from private lab access, uses controlled ingress paths for
-        administration, and keeps higher-risk workloads inside dedicated network
-        segments.
+        The environment separates public presentation, secure remote access,
+        core infrastructure, network segments, lab workloads, and recovery
+        workflows. This keeps the public website separate from private lab
+        services while still allowing the lab to be used for engineering,
+        testing, documentation, and student-friendly demonstrations.
       </p>
-
-      <p>
-        This page is intended to give a high-level map of how the lab is laid
-        out without publishing sensitive details such as IP addresses, internal
-        hostnames, credentials, or provider-specific private configuration.
-      </p>
-
-    </section>
-
-    <section class="case-section">
-
-      <p class="section-label">
-        HIGH-LEVEL ARCHITECTURE
-      </p>
-
-      <h2>
-        Public presentation and private lab access are separate paths.
-      </h2>
 
       <div class="mermaid-card architecture-mermaid">
         <pre class="mermaid">
 flowchart TB
 
-  subgraph Public["Public / External Layer"]
-    USER[Visitor / Student / Operator]
+  USER[Visitor / Student / Operator]
+
+  subgraph PUBLIC["Public Presentation Layer"]
     SITE[Gillpad.dev<br/>Cloudflare Pages]
-    ACCESS[Cloudflare Access]
   end
 
-  subgraph Ingress["Secure Access Layer"]
+  subgraph ACCESS["Secure Remote Access Layer"]
+    CFA[Cloudflare Access]
     TUN[Cloudflare Tunnel]
     GUAC[Apache Guacamole]
-    BASTION[Bastion / Jump Box VM]
+    BAST[Bastion / Jump Box VM]
   end
 
-  subgraph Core["Core Infrastructure Layer"]
+  subgraph CORE["Core Infrastructure Layer"]
     OPN[OPNsense Firewall]
     PVE[Proxmox VE Platform]
     PBS[Proxmox Backup Server]
     MGMT[Management / Automation VM]
   end
 
-  subgraph Networks["Virtual Network Segments"]
-    N1[Management Segment]
-    N2[Internal Services Segment]
-    N3[Security Range Segment]
+  subgraph SEGMENTS["Virtual Network Segments"]
+    MGTNET[Management Segment]
+    SVCNET[Internal Services Segment]
+    RNGNET[Security Range Segment]
   end
 
-  subgraph Workloads["Workload / VM Layer"]
+  subgraph LABS["Lab Workload Layer"]
     TOOL[Proxmox Management Platform]
     K8S[Kubernetes / Istio Lab]
     GOAD[GOAD Active Directory Range]
@@ -180,50 +170,39 @@ flowchart TB
     GEN[General Linux / Windows VMs]
   end
 
-  subgraph Ops["Operations / Recovery Layer"]
+  subgraph OPS["Operations / Recovery Layer"]
+    BACKUP[Backups / Verification]
     SNAP[Snapshots / Rebuilds]
-    BKP[Backups / Verification]
-    DOC[Runbooks / Documentation]
+    DOCS[Runbooks / Documentation]
   end
 
   USER -->|Public portfolio| SITE
-  USER -->|Private lab access| ACCESS
+  USER -->|Private lab access| CFA
 
-  ACCESS --> TUN
+  CFA --> TUN
   TUN --> GUAC
-  GUAC --> BASTION
+  GUAC --> BAST
 
-  BASTION --> MGMT
-  BASTION --> PVE
-  BASTION --> OPN
+  BAST --> MGMT
+  BAST --> PVE
+  BAST --> OPN
 
-  PVE --> N1
-  PVE --> N2
-  PVE --> N3
+  OPN --> SEGMENTS
+  PVE --> SEGMENTS
 
-  OPN --> N1
-  OPN --> N2
-  OPN --> N3
+  MGTNET --> TOOL
+  MGTNET --> MGMT
 
-  N1 --> MGMT
-  N1 --> TOOL
+  SVCNET --> K8S
+  SVCNET --> MAL
+  SVCNET --> GEN
 
-  N2 --> K8S
-  N2 --> MAL
-  N2 --> GEN
+  RNGNET --> GOAD
 
-  N3 --> GOAD
-
-  TOOL --> PVE
   PVE --> PBS
-  PBS --> BKP
-  BKP --> SNAP
-
-  MGMT --> DOC
-  K8S --> SNAP
-  GOAD --> SNAP
-  MAL --> SNAP
-  GEN --> SNAP
+  PBS --> BACKUP
+  LABS --> SNAP
+  MGMT --> DOCS
         </pre>
       </div>
 
@@ -242,21 +221,20 @@ flowchart TB
       <div class="two-column">
 
         <article class="detail-card">
-          <h3>Public / External Layer</h3>
+          <h3>Public Presentation Layer</h3>
           <p>
-            The public website is hosted through Cloudflare Pages and is
-            separate from the private home lab. It showcases the work without
-            requiring inbound access to private infrastructure.
+            The public website is hosted through Cloudflare Pages. It showcases
+            the lab and case studies without depending on direct access to the
+            private home lab.
           </p>
         </article>
 
         <article class="detail-card">
-          <h3>Secure Access Layer</h3>
+          <h3>Secure Remote Access Layer</h3>
           <p>
-            Private lab access flows through Cloudflare Access, Cloudflare
-            Tunnel, Apache Guacamole, and a bastion or jump box. This creates a
-            controlled path into the environment instead of exposing management
-            services directly.
+            Private access flows through Cloudflare Access, Cloudflare Tunnel,
+            Apache Guacamole, and a bastion host. This creates a controlled path
+            into the environment without exposing management services directly.
           </p>
         </article>
 
@@ -264,35 +242,32 @@ flowchart TB
           <h3>Core Infrastructure Layer</h3>
           <p>
             Proxmox VE provides the virtualization platform, OPNsense handles
-            firewalling and segmentation, PBS supports backup and verification,
-            and the management VM supports automation and operator workflows.
+            routing and segmentation, PBS supports recovery, and the management
+            VM provides an operator workspace.
           </p>
         </article>
 
         <article class="detail-card">
           <h3>Virtual Network Segments</h3>
           <p>
-            Workloads are separated by function and risk. Management systems,
-            normal internal services, and intentionally vulnerable security
-            ranges are not treated as the same trust zone.
+            Workloads are separated by function. Management, internal services,
+            and security ranges do not all sit together on one flat network.
           </p>
         </article>
 
         <article class="detail-card">
-          <h3>Workload / VM Layer</h3>
+          <h3>Lab Workload Layer</h3>
           <p>
-            Workloads include the Proxmox management platform, Kubernetes and
-            Istio testing, GOAD Active Directory range work, malware or sandbox
-            experiments, and general Linux or Windows systems.
+            The lab contains purpose-built workloads, including Kubernetes,
+            GOAD, malware sandboxing, general VMs, and internal Proxmox tooling.
           </p>
         </article>
 
         <article class="detail-card">
           <h3>Operations / Recovery Layer</h3>
           <p>
-            The lab is operated with backups, verification, snapshots, rebuild
-            workflows, documentation, and runbooks so failures can be contained
-            and recovered from.
+            Backups, verification, snapshots, rebuilds, and runbooks are treated
+            as part of the architecture instead of afterthoughts.
           </p>
         </article>
 
@@ -303,33 +278,125 @@ flowchart TB
     <section class="case-section">
 
       <p class="section-label">
-        ACCESS MODEL
+        SECURE ACCESS PATH
       </p>
 
       <h2>
-        Users do not directly land on internal management services.
+        Private lab access is brokered through a controlled ingress path.
       </h2>
+
+      <p>
+        The access model separates the public portfolio from private lab
+        administration. Visitors can view the website publicly, but private lab
+        access requires the secure access path.
+      </p>
 
       <div class="mermaid-card">
         <pre class="mermaid">
 flowchart LR
-  USER[Operator] --> ACCESS[Cloudflare Access]
-  ACCESS --> TUN[Cloudflare Tunnel]
+  USER[Operator] --> CFA[Cloudflare Access]
+  CFA --> TUN[Cloudflare Tunnel]
   TUN --> GUAC[Apache Guacamole]
-  GUAC --> BASTION[Bastion / Jump Box]
-  BASTION --> MGMT[Management VM]
-  BASTION --> PVE[Proxmox VE]
-  BASTION --> LAB[Internal Lab Systems]
+  GUAC --> BAST[Bastion / Jump Box]
+  BAST --> PVE[Proxmox / Internal Systems]
         </pre>
       </div>
 
-      <p>
-        The access model is designed around controlled entry. The public site is
-        available to anyone, but private administration requires passing through
-        the access stack before reaching internal systems. This keeps SSH, RDP,
-        hypervisor management, and lab workloads away from direct public
-        exposure.
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Identity first</h3>
+          <p>
+            Access is controlled before a user reaches the internal application
+            path. The design favors identity-aware access over directly exposed
+            administrative services.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>No direct management exposure</h3>
+          <p>
+            SSH, RDP, and virtualization administration stay behind the secure
+            path. The public website does not provide direct access to private
+            infrastructure.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        PROXMOX VM ARCHITECTURE
       </p>
+
+      <h2>
+        Proxmox acts as the platform that hosts the lab workloads.
+      </h2>
+
+      <p>
+        The virtual machine architecture is organized by workload purpose. Each
+        project has a role in the overall lab: secure access, automation,
+        security testing, cloud-native learning, Windows/AD practice, or
+        recovery validation.
+      </p>
+
+      <div class="mermaid-card">
+        <pre class="mermaid">
+flowchart TB
+  PVE[Proxmox VE Platform]
+
+  PVE --> MGMT[Management / Automation VM]
+  PVE --> TOOL[Proxmox Management Platform]
+  PVE --> K8S[Kubernetes / Istio Lab]
+  PVE --> GOAD[GOAD Security Range]
+  PVE --> MAL[Malware / Sandbox Lab]
+  PVE --> GEN[General Linux / Windows VMs]
+  PVE --> PBS[Proxmox Backup Server]
+
+  PBS --> BACKUP[Backups / Verification]
+        </pre>
+      </div>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Management workloads</h3>
+          <p>
+            Management and automation systems provide a controlled place to run
+            tools, edit configuration, document changes, and operate the lab.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Security workloads</h3>
+          <p>
+            GOAD and sandbox systems are treated as security range workloads.
+            They are designed for controlled testing and should not be trusted
+            like normal infrastructure.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Cloud-native workloads</h3>
+          <p>
+            Kubernetes, Istio, Traefik, Helm, and related platform components
+            support cloud-native traffic, routing, ingress, and service mesh
+            learning.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Recovery workloads</h3>
+          <p>
+            PBS, snapshots, verification, and runbooks provide the operational
+            safety net for rebuilding and recovering lab systems.
+          </p>
+        </article>
+
+      </div>
 
     </section>
 
@@ -340,142 +407,47 @@ flowchart LR
       </p>
 
       <h2>
-        Different workloads live in different trust zones.
+        The lab is intentionally separated by trust and purpose.
       </h2>
+
+      <p>
+        The environment uses segmentation to keep management systems, internal
+        services, and intentionally vulnerable security ranges from collapsing
+        into one flat space. This makes the lab easier to reason about, easier
+        to troubleshoot, and safer to use for offensive and defensive testing.
+      </p>
 
       <div class="two-column">
 
         <article class="detail-card">
           <h3>Management Segment</h3>
           <p>
-            Contains systems used to administer, automate, or observe the lab.
-            This segment is treated as higher trust and should not be mixed with
-            intentionally vulnerable workloads.
+            Used for administration, automation, tooling, and controlled access
+            to infrastructure services.
           </p>
         </article>
 
         <article class="detail-card">
           <h3>Internal Services Segment</h3>
           <p>
-            Hosts normal lab services, Linux and Windows systems, Kubernetes
-            testing, and other general workloads that support engineering
-            practice.
+            Used for general lab services, cloud-native workloads, Linux/Windows
+            systems, and supporting infrastructure.
           </p>
         </article>
 
         <article class="detail-card">
           <h3>Security Range Segment</h3>
           <p>
-            Contains intentionally vulnerable or adversary-emulation workloads
-            such as GOAD. This area is designed to be breakable, rebuildable,
-            and separated from the rest of the lab.
+            Used for intentionally vulnerable or high-risk lab workloads such as
+            GOAD, testing ranges, and attack-and-defense practice.
           </p>
         </article>
 
         <article class="detail-card">
-          <h3>Sandbox / Malware Segment</h3>
+          <h3>Recovery Boundary</h3>
           <p>
-            Used for controlled experiments, analysis workflows, and isolated
-            systems that should not be trusted by default.
-          </p>
-        </article>
-
-      </div>
-
-    </section>
-
-    <section class="case-section">
-
-      <p class="section-label">
-        WORKLOAD MODEL
-      </p>
-
-      <h2>
-        The VM architecture is organized by function.
-      </h2>
-
-      <div class="mermaid-card">
-        <pre class="mermaid">
-flowchart TB
-  PVE[Proxmox VE Platform]
-
-  PVE --> ACCESS[Access and Bastion VMs]
-  PVE --> MGMT[Management / Automation VMs]
-  PVE --> SEC[Security Range VMs]
-  PVE --> CLOUD[Cloud-Native Lab VMs]
-  PVE --> SANDBOX[Sandbox / Malware VMs]
-  PVE --> GEN[General Purpose VMs]
-
-  ACCESS --> GUAC[Guacamole]
-  ACCESS --> JUMP[Jump Box]
-
-  MGMT --> TOOL[Proxmox Management Platform]
-  MGMT --> IAC[Terraform / Automation Host]
-
-  SEC --> GOAD[GOAD Active Directory Range]
-  SEC --> ATTACK[Attack / Validation Hosts]
-
-  CLOUD --> K8S[Kubernetes]
-  CLOUD --> ISTIO[Istio / Service Mesh]
-
-  SANDBOX --> WIN[Windows Analysis VM]
-  SANDBOX --> LINUX[Linux Testing VM]
-
-  GEN --> LABVM[Linux / Windows Utility VMs]
-        </pre>
-      </div>
-
-      <p>
-        Organizing workloads by purpose makes the lab easier to explain,
-        troubleshoot, rebuild, and expand. It also helps students understand
-        that infrastructure design is not just about creating VMs; it is about
-        placing systems in the right context.
-      </p>
-
-    </section>
-
-    <section class="case-section">
-
-      <p class="section-label">
-        RECOVERY MODEL
-      </p>
-
-      <h2>
-        The lab assumes things will break and plans for recovery.
-      </h2>
-
-      <div class="two-column">
-
-        <article class="detail-card">
-          <h3>Snapshots</h3>
-          <p>
-            Used before risky changes, testing, lab exercises, and intentionally
-            destructive workflows so systems can be reverted quickly.
-          </p>
-        </article>
-
-        <article class="detail-card">
-          <h3>Backups</h3>
-          <p>
-            Proxmox Backup Server provides a recovery layer for protected
-            workloads after they are managed under the Proxmox environment.
-          </p>
-        </article>
-
-        <article class="detail-card">
-          <h3>Rebuilds</h3>
-          <p>
-            Lab ranges are designed with rebuildability in mind. Security
-            ranges and sandbox systems should be treated as disposable when
-            necessary.
-          </p>
-        </article>
-
-        <article class="detail-card">
-          <h3>Runbooks</h3>
-          <p>
-            Documentation captures the intended access paths, validation steps,
-            recovery checks, and operational lessons learned from each build.
+            Backups, snapshots, and rebuild workflows support experimentation
+            without requiring every VM to be treated like permanent production.
           </p>
         </article>
 
@@ -490,42 +462,46 @@ flowchart TB
       </p>
 
       <h2>
-        The lab can be explained from the outside in.
+        The architecture is built to be explainable.
       </h2>
+
+      <p>
+        The lab is not just a collection of VMs. It is a teaching environment
+        where each layer can be explained independently before showing how the
+        layers interact.
+      </p>
 
       <div class="two-column">
 
         <article class="detail-card">
           <h3>Start with access</h3>
           <p>
-            Students can first understand how a user safely reaches the lab
-            through identity-aware access, tunneling, Guacamole, and a bastion
-            host.
+            Students can first understand how users reach the environment and
+            why direct exposure of management ports is avoided.
           </p>
         </article>
 
         <article class="detail-card">
-          <h3>Move into virtualization</h3>
+          <h3>Then explain virtualization</h3>
           <p>
-            From there, students can see how Proxmox provides compute,
-            networking, snapshots, templates, and VM lifecycle management.
+            Proxmox can be introduced as the platform that hosts isolated VMs,
+            networks, testing ranges, and recovery workflows.
           </p>
         </article>
 
         <article class="detail-card">
-          <h3>Then learn segmentation</h3>
+          <h3>Then explain segmentation</h3>
           <p>
-            The network model shows why management systems, normal workloads,
-            and intentionally vulnerable security ranges should be separated.
+            Network segments show why management systems, service workloads,
+            and vulnerable ranges should not all share the same trust boundary.
           </p>
         </article>
 
         <article class="detail-card">
-          <h3>Finish with operations</h3>
+          <h3>Then explain recovery</h3>
           <p>
-            Recovery, documentation, monitoring, validation, and rebuildability
-            show that engineering work continues after the first successful
-            deployment.
+            Snapshots, backups, rebuilds, and runbooks show how engineers make a
+            lab safe to break and useful to learn from.
           </p>
         </article>
 
@@ -540,15 +516,16 @@ flowchart TB
       </p>
 
       <h2>
-        The architecture ties the portfolio together.
+        The lab architecture ties the portfolio together.
       </h2>
 
       <p>
-        This lab architecture supports the individual project case studies by
-        showing where each system fits in the larger environment. Zero Trust
-        access, Proxmox recovery, management tooling, GOAD, Kubernetes, and
-        vulnerability workflows are not separate one-off projects. They are
-        connected pieces of a layered engineering platform.
+        This architecture overview shows how the individual case studies fit
+        into one larger engineering environment. The public website, secure
+        access path, Proxmox platform, segmented networks, lab workloads, and
+        recovery workflows all support the same goal: a safe, explainable,
+        rebuildable lab for infrastructure engineering, cybersecurity practice,
+        automation, and teaching.
       </p>
 
       <div class="project-footer">
@@ -593,30 +570,10 @@ flowchart TB
         secondaryColor: "#182832",
         tertiaryColor: "#20313c",
         fontFamily: "Inter, system-ui, sans-serif",
-        fontSize: "22px"
+        fontSize: "32px"
       }
     });
   </script>
-  <script type="module">
-    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
 
-    mermaid.initialize({
-      startOnLoad: true,
-      theme: "base",
-      securityLevel: "strict",
-      themeVariables: {
-        darkMode: true,
-        background: "transparent",
-        primaryColor: "#121c22",
-        primaryTextColor: "#e8fff7",
-        primaryBorderColor: "#5ae6b4",
-        lineColor: "#78d2ff",
-        secondaryColor: "#182832",
-        tertiaryColor: "#20313c",
-        fontFamily: "Inter, system-ui, sans-serif",
-        fontSize: "48px"
-      }
-    });
-  </script>
 </body>
 </html>

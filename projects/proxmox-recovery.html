@@ -98,14 +98,16 @@
         Proxmox VE for compute, Proxmox Backup Server for recovery.
       </h2>
 
-      <div class="architecture" role="img" aria-label="Proxmox recovery architecture">
-        <p><strong>Virtual Machines</strong></p>
-        <p>↓</p>
-        <p><strong>Proxmox VE Host</strong><br>VM lifecycle, storage mapping, import, validation</p>
-        <p>↓</p>
-        <p><strong>Proxmox Backup Server</strong><br>Datastore, backup verification, restore readiness</p>
-        <p>↓</p>
-        <p><strong>Recovery Workflow</strong><br>Backup, integrity check, restore planning, documentation</p>
+      <div class="mermaid-card">
+      <pre class="mermaid">
+        flowchart TD
+          VM[Virtual Machines] --> PVE[Proxmox VE Host]
+          PVE -->|Scheduled / manual backup| PBS[Proxmox Backup Server]
+          PBS -->|Datastore storage| DS[PBS Datastore]
+          DS -->|Integrity check| VERIFY[Backup Verification]
+          VERIFY -->|Restore point available| RESTORE[Restore / Recovery Workflow]
+          RESTORE --> PVE
+      </pre>
       </div>
 
     </section>
@@ -193,6 +195,26 @@
       © 2026 Paden Gillispie. Built with GitHub and Cloudflare Pages.
     </p>
   </footer>
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
 
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "strict",
+      themeVariables: {
+        darkMode: true,
+        background: "transparent",
+        primaryColor: "#121c22",
+        primaryTextColor: "#e8fff7",
+        primaryBorderColor: "#5ae6b4",
+        lineColor: "#78d2ff",
+        secondaryColor: "#182832",
+        tertiaryColor: "#20313c",
+        fontFamily: "Inter, system-ui, sans-serif",
+        fontSize: "22px"
+      }
+    });
+  </script>
 </body>
 </html>

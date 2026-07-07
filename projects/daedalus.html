@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="description"
+    content="Daedalus v2 is an AI-assisted engineering copilot for planning, documenting, validating, and governing infrastructure changes inside the Gillpad lab."
+  >
+
+  <meta name="author" content="Paden Gillispie">
+
+  <title>Daedalus v2 | Gillpad</title>
+
+  <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+  <header class="hero" style="min-height:auto;">
+    <nav aria-label="Primary navigation">
+
+      <a class="logo" href="/">
+        GILLPAD.DEV
+      </a>
+
+      <div class="nav-links">
+        <a href="/#about">About</a>
+        <a href="/#projects">Projects</a>
+        <a href="/#skills">Skills</a>
+        <a href="/#contact">Contact</a>
+      </div>
+
+    </nav>
+  </header>
+
+  <main class="case-study">
+
+    <section class="case-hero">
+
+      <a class="back-link" href="/#projects">
+        ← Back to projects
+      </a>
+
+      <p class="eyebrow">
+        DAEDALUS V2
+      </p>
+
+      <h1>
+        AI-Assisted Engineering Copilot for Lab Operations
+      </h1>
+
+      <p class="case-summary">
+        Daedalus is an AI-assisted engineering platform being designed to help
+        plan, document, validate, and govern infrastructure changes across the
+        Gillpad lab. The project is currently in v2 and remains under active
+        refinement. Its purpose is not to autonomously operate infrastructure,
+        but to act as a human-approved engineering copilot that produces useful
+        plans, runbooks, validation checklists, rollback procedures, architecture
+        decisions, and operational documentation.
+      </p>
+
+      <div class="case-meta">
+        <span class="tag">Status: v2 / In Development</span>
+        <span class="tag">Type: Engineering Platform</span>
+        <span class="tag">Role: Architect / Builder</span>
+        <span class="tag">Focus: Human-Approved AI Operations</span>
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        PROJECT SUMMARY
+      </p>
+
+      <h2>
+        The lab is the infrastructure. Daedalus is the engineering copilot.
+      </h2>
+
+      <p>
+        The Gillpad lab contains virtualization, secure access, segmented
+        networks, security ranges, Kubernetes and service mesh experiments,
+        vulnerability and compliance workflows, and recovery systems. As the lab
+        grows, the operational challenge becomes less about whether individual
+        systems can be built and more about whether changes can be planned,
+        documented, validated, reviewed, and repeated safely.
+      </p>
+
+      <p>
+        Daedalus is being built to address that problem. It is intended to serve
+        as a structured engineering assistant for the lab: a system that helps
+        organize project context, generate implementation plans, define rollback
+        paths, write validation steps, produce architecture decision records,
+        and maintain operational knowledge over time.
+      </p>
+
+      <p>
+        The project is currently in v2. At this stage, the priority is defining
+        the operating model, project boundaries, artifact structure, repository
+        layout, approval workflow, and documentation standards before expanding
+        toward deeper automation or integrations.
+      </p>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        CURRENT STATUS
+      </p>
+
+      <h2>
+        Daedalus is in v2 and should be treated as an active design-build
+        project.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>v1: Concept Definition</h3>
+          <p>
+            The first version established the core idea: an AI-assisted platform
+            that supports infrastructure planning and documentation without
+            bypassing human judgment.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>v2: Operating Model</h3>
+          <p>
+            The current version focuses on defining how Daedalus should behave,
+            what artifacts it should generate, how project memory should be
+            structured, and where human approval boundaries belong.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Not Yet Autonomous</h3>
+          <p>
+            Daedalus is not currently intended to make unsupervised
+            infrastructure changes. The design deliberately keeps execution
+            behind a human review and approval process.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>More Refinement Planned</h3>
+          <p>
+            The project will continue to evolve as the lab matures. Future
+            versions may add deeper repository integration, change tracking,
+            alerting, journal entries, and sanitized public examples.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        PROBLEM
+      </p>
+
+      <h2>
+        Infrastructure work creates more context than one person can cleanly
+        hold in memory.
+      </h2>
+
+      <p>
+        A growing home lab can quickly become a collection of half-remembered
+        decisions, undocumented fixes, screenshots, one-off commands, working
+        notes, abandoned experiments, and partially completed improvements.
+        That creates a real engineering problem: the system may work, but the
+        operational knowledge becomes fragile.
+      </p>
+
+      <p>
+        The problem becomes larger when the lab is also used as a public
+        portfolio and teaching environment. It is not enough for systems to be
+        functional. The architecture needs to be explainable. Changes need to be
+        repeatable. Decisions need to be captured. Risks need to be visible.
+        Rollback steps need to exist before a change breaks something.
+      </p>
+
+      <p>
+        Daedalus is being designed around that operational gap. The goal is to
+        help convert raw work into engineering artifacts that can be reviewed,
+        reused, published, sanitized, or handed off.
+      </p>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        MISSION
+      </p>
+
+      <h2>
+        Daedalus should improve engineering discipline without removing the
+        engineer from the loop.
+      </h2>
+
+      <p>
+        The mission of Daedalus is to support better infrastructure engineering
+        by helping produce the documents and reasoning artifacts that are often
+        skipped during fast-moving lab work. It should help slow the work down
+        just enough to make changes safer, clearer, and easier to explain.
+      </p>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Plan Before Changing</h3>
+          <p>
+            Generate change plans before implementation begins, including scope,
+            assumptions, dependencies, risks, validation steps, and rollback
+            procedures.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Document While Building</h3>
+          <p>
+            Convert work sessions into durable notes, runbooks, architecture
+            updates, engineering logs, and project summaries.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Validate After Changes</h3>
+          <p>
+            Produce verification checklists that confirm whether a change
+            actually worked and whether related systems still behave as
+            expected.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Preserve Human Judgment</h3>
+          <p>
+            Keep the engineer responsible for approval, execution, review, and
+            final decisions. Daedalus assists; it does not own the environment.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        WHAT DAEDALUS IS
+      </p>
+
+      <h2>
+        Daedalus is a structured engineering copilot.
+      </h2>
+
+      <p>
+        Daedalus is intended to operate as a planning and documentation layer
+        above the lab. It should understand the lab architecture, active
+        projects, previous decisions, known risks, and current goals well enough
+        to help produce useful engineering artifacts.
+      </p>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Engineering Planner</h3>
+          <p>
+            Produces implementation plans, phased work breakdowns, dependency
+            lists, risk notes, and pre-change assumptions.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Documentation Assistant</h3>
+          <p>
+            Generates runbooks, project pages, architecture notes, validation
+            summaries, and sanitized portfolio-ready writeups.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Decision Recorder</h3>
+          <p>
+            Captures why a decision was made, what alternatives were considered,
+            and what tradeoffs were accepted.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Validation Partner</h3>
+          <p>
+            Helps define what success looks like before and after a change,
+            including service checks, rollback triggers, and recovery tests.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        WHAT DAEDALUS IS NOT
+      </p>
+
+      <h2>
+        The project deliberately avoids pretending to be a fully autonomous
+        infrastructure operator.
+      </h2>
+
+      <p>
+        Daedalus is not being framed as an autonomous agent that freely changes
+        production systems. That would be the wrong trust model for this stage
+        of the project. The better design is a controlled copilot that creates
+        proposed actions and engineering artifacts for human review.
+      </p>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Not a Blind Executor</h3>
+          <p>
+            Daedalus should not run arbitrary commands or apply infrastructure
+            changes without review, approval, and a clear execution boundary.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Not a Replacement for Documentation</h3>
+          <p>
+            The goal is not to avoid writing documentation. The goal is to make
+            documentation easier to generate, maintain, and connect to real
+            work.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Not a Magic Security Tool</h3>
+          <p>
+            Daedalus should support security thinking, threat modeling, and
+            validation, but it does not replace scanning, review, or disciplined
+            operational controls.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Not Finished</h3>
+          <p>
+            This is a v2 project. The operating model is still being refined and
+            future versions will likely reshape the architecture as the system
+            becomes more useful.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        PLANNED OPERATING MODEL
+      </p>
+
+      <h2>
+        Daedalus should sit between project memory, engineering intent, and
+        human-approved action.
+      </h2>
+
+      <div class="architecture-flow">
+        <div class="architecture-step">
+          <span>01</span>
+          <h3>Context</h3>
+          <p>
+            Daedalus receives project context from notes, repo files, lab
+            architecture, previous decisions, and active objectives.
+          </p>
+        </div>
+
+        <div class="architecture-step">
+          <span>02</span>
+          <h3>Plan</h3>
+          <p>
+            It converts intent into a structured engineering plan with scope,
+            assumptions, risks, validation, and rollback.
+          </p>
+        </div>
+
+        <div class="architecture-step">
+          <span>03</span>
+          <h3>Review</h3>
+          <p>
+            The human operator reviews the plan, adjusts it, rejects it, or
+            approves it for manual execution.
+          </p>
+        </div>
+
+        <div class="architecture-step">
+          <span>04</span>
+          <h3>Execute</h3>
+          <p>
+            Execution remains controlled by the human. Daedalus may assist with
+            commands or IaC generation, but approval stays explicit.
+          </p>
+        </div>
+
+        <div class="architecture-step">
+          <span>05</span>
+          <h3>Validate</h3>
+          <p>
+            Daedalus helps produce validation checklists and post-change review
+            notes to confirm the result.
+          </p>
+        </div>
+
+        <div class="architecture-step">
+          <span>06</span>
+          <h3>Record</h3>
+          <p>
+            Final outcomes are captured as logs, ADRs, runbook updates, and
+            project documentation.
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        CONCEPTUAL ARCHITECTURE
+      </p>
+
+      <h2>
+        The planned architecture is organized around memory, generation,
+        review, and output.
+      </h2>
+
+      <p>
+        The v2 design is intentionally simple. The goal is to define the system
+        clearly before adding unnecessary complexity. The first useful version
+        should be able to ingest project context, generate engineering
+        artifacts, preserve decision history, and support a repeatable workflow.
+      </p>
+
+      <div class="mermaid-card">
+        <pre class="mermaid">
+flowchart TB
+  USER[Engineer / Operator]
+
+  REPO[Git Repository<br/>Project Files / Notes / Docs]
+  MEMORY[Project Memory<br/>Architecture / Decisions / Logs]
+  DAEDALUS[Daedalus v2<br/>Engineering Copilot]
+
+  PLAN[Change Plans]
+  ADR[Architecture Decision Records]
+  RUNBOOK[Runbooks]
+  VALIDATE[Validation Checklists]
+  ROLLBACK[Rollback Plans]
+  JOURNAL[Engineering Journal Entries]
+
+  REVIEW[Human Review<br/>Approve / Reject / Revise]
+  LAB[Gillpad Lab Infrastructure]
+
+  USER --> DAEDALUS
+  REPO --> DAEDALUS
+  MEMORY --> DAEDALUS
+
+  DAEDALUS --> PLAN
+  DAEDALUS --> ADR
+  DAEDALUS --> RUNBOOK
+  DAEDALUS --> VALIDATE
+  DAEDALUS --> ROLLBACK
+  DAEDALUS --> JOURNAL
+
+  PLAN --> REVIEW
+  ADR --> REVIEW
+  RUNBOOK --> REVIEW
+  VALIDATE --> REVIEW
+  ROLLBACK --> REVIEW
+
+  REVIEW -->|Approved manual execution| LAB
+  REVIEW -->|Final notes| MEMORY
+  REVIEW -->|Documentation updates| REPO
+        </pre>
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        CORE CAPABILITIES
+      </p>
+
+      <h2>
+        The first useful version should focus on engineering artifacts, not
+        flashy automation.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Project Memory</h3>
+          <p>
+            Maintain structured context about the lab, active projects, project
+            goals, current architecture, known risks, previous decisions, and
+            unresolved work.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Change Planning</h3>
+          <p>
+            Produce implementation plans that include goal, scope, affected
+            systems, prerequisites, commands or file changes, validation steps,
+            and rollback actions.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Architecture Decisions</h3>
+          <p>
+            Generate ADR-style records that capture the decision, context,
+            alternatives, consequences, and follow-up work.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Runbook Generation</h3>
+          <p>
+            Convert successful workflows into repeatable operational procedures
+            that can be reused later.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Validation Checklists</h3>
+          <p>
+            Define post-change checks for service availability, access paths,
+            backup state, security boundaries, and expected application
+            behavior.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Rollback Planning</h3>
+          <p>
+            Identify how to recover if a change fails, including restore
+            points, snapshots, config backups, and manual reversal steps.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        HUMAN APPROVAL BOUNDARY
+      </p>
+
+      <h2>
+        The approval boundary is the most important design decision.
+      </h2>
+
+      <p>
+        Daedalus should help generate better engineering work, but it should not
+        silently become the operator. The approval boundary defines the
+        difference between assistance and automation risk.
+      </p>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Daedalus Can Propose</h3>
+          <p>
+            It can propose architecture changes, command sequences, Terraform
+            changes, Ansible tasks, documentation updates, and validation
+            checks.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>The Human Approves</h3>
+          <p>
+            The engineer reviews the proposal and decides whether the change is
+            accurate, safe, necessary, and ready to execute.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Execution Is Controlled</h3>
+          <p>
+            Any future execution capability should be gated, logged, limited in
+            scope, and reversible. Manual execution remains the v2 default.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Outcomes Are Captured</h3>
+          <p>
+            Whether the change succeeds, fails, or is deferred, the result
+            should be recorded so the next planning cycle has better context.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        ENGINEERING ARTIFACTS
+      </p>
+
+      <h2>
+        Daedalus should produce outputs that are useful even without automation.
+      </h2>
+
+      <p>
+        The platform becomes valuable when it creates artifacts that can be
+        reviewed, committed, shared, sanitized, or turned into public case study
+        material.
+      </p>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Change Plan</h3>
+          <p>
+            A proposed change with purpose, scope, affected systems, steps,
+            validation, risks, and rollback.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>ADR</h3>
+          <p>
+            A concise architecture decision record explaining what was decided,
+            why it was chosen, and what tradeoffs were accepted.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Runbook</h3>
+          <p>
+            A repeatable operational procedure that documents how to perform a
+            task correctly in the future.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Validation Checklist</h3>
+          <p>
+            A list of checks used to confirm that the environment still behaves
+            correctly after a change.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Rollback Plan</h3>
+          <p>
+            A recovery path that explains how to return to a known-good state if
+            the implementation fails.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Engineering Journal Entry</h3>
+          <p>
+            A readable summary of what changed, what was learned, what failed,
+            and what should happen next.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        VALIDATION MODEL
+      </p>
+
+      <h2>
+        Every meaningful change should end with evidence.
+      </h2>
+
+      <p>
+        Daedalus should help define what evidence is required before a change is
+        considered complete. This could include successful service checks,
+        working access paths, clean deployment status, backup verification,
+        restored functionality, or updated documentation.
+      </p>
+
+      <div class="architecture-flow">
+        <div class="architecture-step">
+          <span>01</span>
+          <h3>Pre-Change State</h3>
+          <p>
+            Capture the known-good state, current configuration, active risks,
+            and any backup or snapshot requirements.
+          </p>
+        </div>
+
+        <div class="architecture-step">
+          <span>02</span>
+          <h3>Implementation Evidence</h3>
+          <p>
+            Record what was changed, what files were edited, what commands were
+            run, and what systems were affected.
+          </p>
+        </div>
+
+        <div class="architecture-step">
+          <span>03</span>
+          <h3>Post-Change Checks</h3>
+          <p>
+            Confirm the expected service, access, network, security, and
+            recovery behavior after implementation.
+          </p>
+        </div>
+
+        <div class="architecture-step">
+          <span>04</span>
+          <h3>Decision Record</h3>
+          <p>
+            Save the final outcome, lessons learned, open issues, and next
+            actions.
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        SECURITY AND SAFETY
+      </p>
+
+      <h2>
+        Daedalus must be useful without becoming a new risk to the lab.
+      </h2>
+
+      <p>
+        Any AI-assisted engineering system that touches infrastructure planning
+        needs clear safety boundaries. The v2 design treats Daedalus as a
+        planning and documentation system first. Automation can be added later
+        only if it is constrained, reviewed, and logged.
+      </p>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>No Secrets in Public Output</h3>
+          <p>
+            Public artifacts should never expose passwords, tokens, private IP
+            addressing, sensitive hostnames, or internal-only implementation
+            details.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Sanitized Portfolio Mode</h3>
+          <p>
+            Daedalus should eventually help convert internal notes into public
+            summaries that preserve the engineering value without exposing lab
+            secrets.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Approval Before Execution</h3>
+          <p>
+            Any future automated execution path should require explicit human
+            approval and should generate logs of what was proposed and what was
+            applied.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Rollback First</h3>
+          <p>
+            Change plans should include rollback thinking before execution
+            begins, especially for network, access, and virtualization changes.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        CURRENT V2 SCOPE
+      </p>
+
+      <h2>
+        The v2 scope is intentionally focused.
+      </h2>
+
+      <p>
+        The current version should prove that Daedalus can organize engineering
+        thought before it attempts to operate anything directly.
+      </p>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>In Scope</h3>
+          <p>
+            Project memory, change planning, runbook drafting, ADR generation,
+            validation checklists, rollback planning, engineering journal
+            entries, and sanitized case study support.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Out of Scope for v2</h3>
+          <p>
+            Fully autonomous infrastructure changes, unrestricted command
+            execution, unattended deployments, secret handling, and direct
+            control of sensitive systems.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Near-Term Deliverables</h3>
+          <p>
+            Repository structure, baseline documentation templates, sample
+            change plans, sample ADRs, sample validation checklists, and an
+            initial operating workflow.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Success Criteria</h3>
+          <p>
+            Daedalus is useful if it makes lab changes easier to plan, explain,
+            validate, document, and resume after interruption.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        ROADMAP
+      </p>
+
+      <h2>
+        The roadmap moves from documentation intelligence toward controlled
+        operational assistance.
+      </h2>
+
+      <div class="architecture-flow">
+        <div class="architecture-step">
+          <span>v2</span>
+          <h3>Define the Platform</h3>
+          <p>
+            Establish project structure, memory files, artifact templates,
+            operating rules, and human approval boundaries.
+          </p>
+        </div>
+
+        <div class="architecture-step">
+          <span>v3</span>
+          <h3>Local MVP</h3>
+          <p>
+            Build a working local version that can generate plans, ADRs,
+            runbooks, validation steps, rollback plans, and journal entries.
+          </p>
+        </div>
+
+        <div class="architecture-step">
+          <span>v4</span>
+          <h3>Git-Backed Workflow</h3>
+          <p>
+            Connect outputs to a repository workflow so generated artifacts can
+            be reviewed, committed, versioned, and improved over time.
+          </p>
+        </div>
+
+        <div class="architecture-step">
+          <span>v5</span>
+          <h3>Sanitized Public Examples</h3>
+          <p>
+            Publish safe examples of Daedalus-generated artifacts to show how
+            the platform supports real engineering work.
+          </p>
+        </div>
+
+        <div class="architecture-step">
+          <span>Future</span>
+          <h3>Journal and Notifications</h3>
+          <p>
+            Add an engineering journal or blog, then consider RSS or optional
+            email updates for people who want to follow the project.
+          </p>
+        </div>
+
+        <div class="architecture-step">
+          <span>Future</span>
+          <h3>Controlled Integrations</h3>
+          <p>
+            Evaluate limited integrations with lab tooling only after the review
+            model, logging, and rollback approach are mature.
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        ENGINEERING LOG
+      </p>
+
+      <h2>
+        The log should start here, then split into a journal when it grows.
+      </h2>
+
+      <p>
+        For now, Daedalus can keep a short engineering log directly on this
+        project page. Once the log becomes too large, it should move into a
+        dedicated journal or blog section so the case study remains readable.
+      </p>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>v1 — Concept</h3>
+          <p>
+            Defined Daedalus as an AI-assisted engineering copilot for the
+            Gillpad lab. Established that the project should support planning,
+            documentation, validation, and human approval.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>v2 — Project Definition</h3>
+          <p>
+            Refining the operating model, artifact types, repository structure,
+            public case study framing, and the boundary between planning and
+            execution.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Next — Repository Setup</h3>
+          <p>
+            Set up Git structure for Daedalus outputs, templates, planning
+            documents, ADRs, runbooks, validation checklists, and engineering
+            journal entries.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Future — Public Journal</h3>
+          <p>
+            Decide whether to create a dedicated journal or blog for ongoing
+            updates, then evaluate RSS or optional email notifications for
+            interested followers.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        JOURNAL AND NOTIFICATION DECISION
+      </p>
+
+      <h2>
+        The right move is to start with a small embedded log, then graduate to a
+        journal.
+      </h2>
+
+      <p>
+        The Daedalus project will likely produce ongoing lessons, design notes,
+        failed attempts, architecture changes, and useful implementation
+        details. That kind of content should not permanently live inside the
+        main case study page. The case study should explain what the project is;
+        the journal should explain how it evolves.
+      </p>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Current Decision</h3>
+          <p>
+            Keep a short engineering log on this page while Daedalus is still in
+            v2. Use it for major milestones only.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Future Journal Path</h3>
+          <p>
+            When updates become frequent, create a dedicated path such as
+            <code>/journal/</code> for longer build logs, lessons learned, and
+            project updates.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Email Alerts</h3>
+          <p>
+            Email alerts may be useful later, but they are not required yet.
+            RSS or a simple update feed should come before collecting email
+            addresses.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Follower Value</h3>
+          <p>
+            The goal would not be marketing. The goal would be helping people
+            follow the workflow, decisions, experiments, and lessons learned as
+            the project matures.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        LESSONS LEARNED SO FAR
+      </p>
+
+      <h2>
+        The project is already clarifying what responsible AI-assisted
+        engineering should look like.
+      </h2>
+
+      <div class="two-column">
+
+        <article class="detail-card">
+          <h3>Definition Matters</h3>
+          <p>
+            AI-assisted engineering tools need clear boundaries. Without a
+            defined operating model, the project can drift into vague automation
+            instead of useful engineering support.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Artifacts Beat Hype</h3>
+          <p>
+            The value of Daedalus will be measured by the quality of the plans,
+            runbooks, ADRs, checklists, rollback procedures, and journal entries
+            it helps produce.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Human Review Is a Feature</h3>
+          <p>
+            Keeping a human in the loop is not a limitation. It is the design
+            choice that makes the platform appropriate for real infrastructure
+            work.
+          </p>
+        </article>
+
+        <article class="detail-card">
+          <h3>Documentation Is Operations</h3>
+          <p>
+            A lab becomes more valuable when decisions and procedures are
+            documented clearly enough to resume, explain, teach, or rebuild the
+            work later.
+          </p>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
+        FINAL PROJECT SUMMARY
+      </p>
+
+      <h2>
+        Daedalus is the next layer of the Gillpad lab.
+      </h2>
+
+      <p>
+        Daedalus is being developed as an AI-assisted engineering copilot for a
+        self-hosted infrastructure and cybersecurity lab. It is currently in v2,
+        with more refinement planned. The project focuses on planning,
+        documentation, validation, rollback design, architecture decision
+        tracking, and human-approved change support.
+      </p>
+
+      <p>
+        The near-term goal is to make Daedalus useful before making it powerful.
+        That means producing high-quality engineering artifacts first and
+        delaying deeper automation until the review model, logging strategy,
+        safety boundaries, and rollback approach are mature.
+      </p>
+
+      <p>
+        If successful, Daedalus will become the operating intelligence layer for
+        the Gillpad lab: not the system that replaces the engineer, but the
+        system that helps the engineer work with more structure, evidence, and
+        continuity.
+      </p>
+
+      <div class="project-footer">
+        <a class="button primary" href="/#projects">
+          Back to projects
+        </a>
+
+        <a class="button secondary" href="/projects/lab-architecture.html">
+          View lab architecture
+        </a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <p>
+      Built as a living portfolio for infrastructure engineering, security
+      architecture, automation, and lab operations.
+    </p>
+
+    <p>
+      © 2026 Paden Gillispie. Built with GitHub and Cloudflare Pages.
+    </p>
+  </footer>
+
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
+
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "base",
+      securityLevel: "strict",
+      themeVariables: {
+        darkMode: true,
+        background: "transparent",
+        primaryColor: "#121c22",
+        primaryTextColor: "#e8fff7",
+        primaryBorderColor: "#5ae6b4",
+        lineColor: "#78d2ff",
+        secondaryColor: "#182832",
+        tertiaryColor: "#20313c",
+        fontFamily: "Inter, system-ui, sans-serif",
+        fontSize: "22px"
+      }
+    });
+  </script>
+
+</body>
+</html>

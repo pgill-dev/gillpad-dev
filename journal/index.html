@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Engineering Journal | GillPad</title>
+<style>:root {
+  --bg: #07111f;
+  --panel: #0d1b2a;
+  --panel-2: #122338;
+  --text: #e8f0f7;
+  --muted: #9fb1c3;
+  --accent: #4de1c1;
+  --border: rgba(255,255,255,.10);
+  --code: #06101b;
+  --warning: #f0c674;
+  --max: 1120px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 20% 0%, rgba(77,225,193,.10), transparent 32rem),
+    linear-gradient(180deg, #07111f 0%, #091522 100%);
+  line-height: 1.7;
+}
+a { color: var(--accent); }
+header {
+  border-bottom: 1px solid var(--border);
+  background: rgba(7,17,31,.88);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+.nav {
+  max-width: var(--max);
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .95rem 1.25rem;
+}
+.brand { font-weight: 800; letter-spacing: .08em; color: white; text-decoration: none; }
+.brand span { color: var(--accent); }
+.nav-links { display: flex; gap: 1rem; font-size: .92rem; }
+.hero {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 5rem 1.25rem 3rem;
+}
+.eyebrow {
+  color: var(--accent);
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-size: .78rem;
+}
+h1 { font-size: clamp(2.6rem, 7vw, 5.4rem); line-height: 1.02; margin: .5rem 0 1.25rem; max-width: 1050px; }
+.lead { color: var(--muted); max-width: 800px; font-size: 1.2rem; }
+.meta { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.5rem; }
+.tag {
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.035);
+  padding: .35rem .65rem;
+  border-radius: 999px;
+  font-size: .82rem;
+  color: var(--muted);
+}
+.layout {
+  max-width: var(--max);
+  margin: auto;
+  padding: 0 1.25rem 5rem;
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 2rem;
+}
+aside {
+  position: sticky;
+  top: 5rem;
+  align-self: start;
+  border: 1px solid var(--border);
+  background: rgba(13,27,42,.78);
+  border-radius: 16px;
+  padding: 1rem;
+}
+aside a { display: block; color: var(--muted); text-decoration: none; padding: .28rem 0; font-size: .9rem; }
+aside a:hover { color: var(--accent); }
+article section {
+  margin-bottom: 2.5rem;
+  background: rgba(13,27,42,.66);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: clamp(1.2rem, 3vw, 2.2rem);
+}
+h2 { margin-top: 0; font-size: 1.75rem; }
+h3 { margin-top: 1.8rem; }
+p, li { color: #d8e2eb; }
+blockquote {
+  border-left: 4px solid var(--accent);
+  background: rgba(77,225,193,.07);
+  margin: 1.2rem 0;
+  padding: 1rem 1.2rem;
+}
+pre {
+  overflow-x: auto;
+  background: var(--code);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1rem;
+}
+code { font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace; }
+table { width: 100%; border-collapse: collapse; margin: 1.2rem 0; }
+th, td { text-align: left; padding: .75rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { color: var(--accent); }
+.callout {
+  border: 1px solid rgba(77,225,193,.35);
+  background: rgba(77,225,193,.06);
+  border-radius: 14px;
+  padding: 1rem 1.2rem;
+}
+.warning { border-color: rgba(240,198,116,.35); background: rgba(240,198,116,.06); }
+.checklist { list-style: none; padding: 0; }
+.checklist li { margin: .45rem 0; padding-left: 1.8rem; position: relative; }
+.checklist li::before { content: "□"; position: absolute; left: 0; color: var(--accent); font-weight: 800; }
+footer {
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  text-align: center;
+  padding: 2rem 1rem;
+}
+@media (max-width: 850px) {
+  .layout { grid-template-columns: 1fr; }
+  aside { position: static; }
+  .nav-links { display: none; }
+}</style>
+</head>
+<body>
+<header><nav class="nav"><a class="brand" href="/">GILL<span>PAD</span></a><div class="nav-links"><a href="/">Home</a><a href="/projects/">Projects</a><a href="/journal/">Engineering Journal</a></div></nav></header>
+<section class="hero">
+<div class="eyebrow">GillPad Engineering Journal</div>
+<h1>Build. Break. Validate. Document.</h1>
+<p class="lead">Field notes and case studies from infrastructure, security, platform engineering, automation, migration, and home-lab operations.</p>
+</section>
+<div class="layout" style="grid-template-columns:1fr">
+<article>
+<section>
+<div class="eyebrow">17 July 2026 · Zero Trust / Remote Access</div>
+<h2><a href="/journal/tunnel-in-a-tunnel/">Tunnel-in-a-Tunnel</a></h2>
+<p>A secure remote-access architecture using Cloudflare Zero Trust, Cloudflare Tunnel, Apache Guacamole, and Windows RDP—and the redesign that removed nested rendering without reopening the firewall.</p>
+<p><a href="/journal/tunnel-in-a-tunnel/">Read the engineering case study →</a></p>
+</section>
+</article>
+</div>
+<footer>© 2026 Paden Gillispie · GillPad Engineering Journal</footer>
+</body></html>

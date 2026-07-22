@@ -5,3 +5,4 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), serial=(), xr-spatial-tracking=()
   X-Robots-Tag: index, follow
+Encryption

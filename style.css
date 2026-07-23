@@ -18,6 +18,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -25,6 +26,7 @@ body {
   background: var(--background);
   color: var(--text);
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 a {
@@ -348,26 +350,33 @@ section > p {
 /* Mermaid diagram cards */
 .mermaid-card {
   margin: 2.5rem auto;
-  padding: 2rem;
-  width: min(1150px, 100%);
+  padding: 1.25rem;
+  width: 100%;
+  max-width: 100%;
   border: 1px solid rgba(77, 225, 193, 0.25);
   border-radius: 14px;
   background:
     linear-gradient(135deg, rgba(77, 225, 193, 0.08), rgba(120, 160, 255, 0.05)),
     rgba(255, 255, 255, 0.04);
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
-.mermaid-card pre {
+.mermaid-card pre,
+.mermaid-card .mermaid {
+  display: block;
+  width: 100%;
+  max-width: 100%;
   margin: 0;
   overflow: hidden;
 }
 
 .mermaid-card svg {
+  display: block !important;
   width: 100% !important;
   max-width: 100% !important;
+  min-width: 0 !important;
   height: auto !important;
-  display: block;
+  overflow: visible;
 }
 
 .mermaid-card .node rect,
@@ -376,7 +385,7 @@ section > p {
 .mermaid-card .node circle {
   fill: rgba(18, 28, 34, 0.95) !important;
   stroke: rgba(77, 225, 193, 0.75) !important;
-  stroke-width: 2px !important;
+  stroke-width: 1.5px !important;
 }
 
 .mermaid-card .nodeLabel,
@@ -384,42 +393,25 @@ section > p {
 .mermaid-card text {
   fill: #e8fff7 !important;
   color: #e8fff7 !important;
-  font-size: 15px !important;
+  font-size: 11px !important;
   font-weight: 700 !important;
 }
 
 .mermaid-card .edgePath path {
   stroke: rgba(120, 210, 255, 0.9) !important;
-  stroke-width: 2px !important;
+  stroke-width: 1.5px !important;
 }
 
 .mermaid-card .edgeLabel {
   background-color: rgba(10, 18, 24, 0.9) !important;
   color: #c9fff1 !important;
-  font-size: 12px !important;
+  font-size: 9px !important;
   font-weight: 700 !important;
 }
 
 .mermaid-card marker path {
   fill: rgba(120, 210, 255, 0.9) !important;
   stroke: rgba(120, 210, 255, 0.9) !important;
-}
-
-@media (max-width: 768px) {
-  .mermaid-card {
-    padding: 1rem;
-    width: 100%;
-  }
-
-  .mermaid-card .nodeLabel,
-  .mermaid-card .label,
-  .mermaid-card text {
-    font-size: 11px !important;
-  }
-
-  .mermaid-card .edgeLabel {
-    font-size: 9px !important;
-  }
 }
 
 /* Footer */
@@ -458,7 +450,25 @@ footer {
     width: min(100%, calc(100% - 2rem));
   }
 
+  main {
+    padding: 0 5%;
+  }
+
+  .hero {
+    padding: 0 5%;
+  }
+
   .mermaid-card {
-    padding: 1rem;
+    padding: 0.75rem;
+  }
+
+  .mermaid-card .nodeLabel,
+  .mermaid-card .label,
+  .mermaid-card text {
+    font-size: 9px !important;
+  }
+
+  .mermaid-card .edgeLabel {
+    font-size: 8px !important;
   }
 }

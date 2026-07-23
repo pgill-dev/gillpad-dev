@@ -112,13 +112,13 @@
 
       <div class="mermaid-card">
         <pre class="mermaid">
-flowchart TD
-  USER[User Request] --> EDGE[External Entry Point]
-  EDGE --> GW[Gateway or Ingress Controller]
-  GW --> ROUTE[Ingress Rule or Virtual Service]
-  ROUTE --> SVC[Kubernetes Service]
-  SVC --> POD[Application Pod]
-  POD --> RESP[Response Path Back to User]
+flowchart LR
+  USER[User] --> EDGE[Edge]
+  EDGE --> GW[Gateway]
+  GW --> ROUTE[Route]
+  ROUTE --> SVC[Service]
+  SVC --> POD[Pod]
+  POD --> RESP[Response]
         </pre>
       </div>
 
@@ -210,10 +210,13 @@ flowchart TD
             complexity behind long one-line commands.
           </p>
         </article>
-          <a class="project-link" href="/journal/kubernetes-cluster-bootstrap">
-            Read Kubernetes bootstrap journal →
-          </a>
 
+      </div>
+
+      <div class="project-footer">
+        <a class="project-link" href="/journal/kubernetes-cluster-bootstrap">
+          Read Kubernetes bootstrap journal →
+        </a>
       </div>
 
     </section>
@@ -231,16 +234,16 @@ flowchart TD
       <div class="mermaid-card">
         <pre class="mermaid">
 flowchart TD
-  REQ[Request] --> GATEWAY[Gateway or Ingress]
-  GATEWAY --> ROUTE[Route or Virtual Service]
-  ROUTE --> SERVICE[Kubernetes Service]
-  SERVICE --> ENDPOINT[Endpoint]
-  ENDPOINT --> POD[Healthy Pod]
-  POD --> OK[Successful Response]
+  REQ[Request] --> GW[Gateway]
+  GW --> ROUTE[Route]
+  ROUTE --> SVC[Service]
+  SVC --> EP[Endpoint]
+  EP --> POD[Healthy Pod]
+  POD --> OK[Success]
 
-  SERVICE -->|No endpoints| FAIL503[503 Failure]
-  ROUTE -->|Wrong service or port| FAILROUTE[Routing Failure]
-  GATEWAY -->|Wrong namespace or missing object| FAILGW[Gateway Failure]
+  SVC --> NOEP[No Endpoints]
+  ROUTE --> BADROUTE[Bad Route]
+  GW --> BADGW[Gateway Issue]
         </pre>
       </div>
 
@@ -458,6 +461,35 @@ flowchart TD
     <section class="case-section">
 
       <p class="section-label">
+        RELATED ENGINEERING JOURNAL
+      </p>
+
+      <h2>
+        The hands-on bootstrap work is documented separately.
+      </h2>
+
+      <p>
+        The project page summarizes the Kubernetes and service mesh direction.
+        The engineering journal captures the hands-on bootstrap process, CNI
+        decision, troubleshooting path, validation checks, and lessons learned
+        from building the first three-node cluster.
+      </p>
+
+      <div class="project-footer">
+        <a class="button primary" href="/journal/kubernetes-cluster-bootstrap">
+          Read Kubernetes bootstrap journal
+        </a>
+
+        <a class="button secondary" href="/#projects">
+          Back to projects
+        </a>
+      </div>
+
+    </section>
+
+    <section class="case-section">
+
+      <p class="section-label">
         NEXT PHASE
       </p>
 
@@ -501,18 +533,6 @@ flowchart TD
           Read GOAD case study
         </a>
       </div>
-      <section class="case-section">
-    <h2>Related Engineering Journal</h2>
-    <p>
-      The project page summarizes the Kubernetes and service mesh direction. The
-      engineering journal captures the hands-on bootstrap process, CNI decision,
-      troubleshooting path, validation checks, and lessons learned from building
-      the first three-node cluster.
-    </p>
-    <a class="project-link" href="/journal/kubernetes-cluster-bootstrap.html">
-      Read Kubernetes bootstrap journal →
-    </a>
-  </section>
 
     </section>
 
@@ -541,7 +561,14 @@ flowchart TD
         secondaryColor: "#182832",
         tertiaryColor: "#20313c",
         fontFamily: "Inter, system-ui, sans-serif",
-        fontSize: "22px"
+        fontSize: "10px"
+      },
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true,
+        curve: "linear",
+        nodeSpacing: 18,
+        rankSpacing: 28
       }
     });
   </script>

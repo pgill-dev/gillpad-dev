@@ -355,17 +355,18 @@ section > p {
   background:
     linear-gradient(135deg, rgba(77, 225, 193, 0.08), rgba(120, 160, 255, 0.05)),
     rgba(255, 255, 255, 0.04);
-  overflow-x: auto;
+  overflow-x: hidden;
 }
 
 .mermaid-card pre {
   margin: 0;
+  overflow: hidden;
 }
 
 .mermaid-card svg {
-  width: 100%;
-  max-width: 100%;
-  height: auto;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
   display: block;
 }
 
@@ -410,8 +411,14 @@ section > p {
     width: 100%;
   }
 
-  .mermaid-card svg {
-    min-width: 720px;
+  .mermaid-card .nodeLabel,
+  .mermaid-card .label,
+  .mermaid-card text {
+    font-size: 11px !important;
+  }
+
+  .mermaid-card .edgeLabel {
+    font-size: 9px !important;
   }
 }
 

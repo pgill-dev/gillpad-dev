@@ -1,1 +1,341 @@
+<section class="case-hero">
+  <p class="eyebrow">Engineering Journal</p>
+  <h1>Kubernetes Cluster Bootstrap and Cilium Validation</h1>
 
+  <p class="hero-summary">
+    A field note from building a three-node Kubernetes lab cluster from zero
+    using Ubuntu virtual machines, kubeadm, containerd, Helm, and Cilium.
+    The goal was not just to get Kubernetes running, but to understand and
+    validate the decisions that make the cluster usable as a real lab platform.
+  </p>
+
+  <div class="case-meta">
+    <span>Kubernetes</span>
+    <span>containerd</span>
+    <span>Cilium</span>
+    <span>Helm</span>
+    <span>Validation</span>
+  </div>
+</section>
+
+<section class="case-section">
+  <h2>Purpose</h2>
+  <p>
+    This build established the first functional Kubernetes foundation in the
+    lab. The immediate objective was to bring up a small but realistic cluster
+    that could later support ingress, service mesh testing, observability, TLS
+    experiments, application deployment, and operational troubleshooting.
+  </p>
+
+  <p>
+    The goal was not to hide behind a one-click distribution. The point was to
+    build enough of the stack manually to understand where Kubernetes depends on
+    the operating system, container runtime, node networking, CNI behavior, and
+    cluster bootstrap process.
+  </p>
+</section>
+
+<section class="case-section">
+  <h2>Environment</h2>
+
+  <div class="two-column">
+    <article class="detail-card">
+      <h3>Cluster Layout</h3>
+      <ul>
+        <li>Three Ubuntu 24.04 virtual machines</li>
+        <li>One control plane node</li>
+        <li>Two worker nodes</li>
+        <li>Static host configuration across nodes</li>
+        <li>Cluster built inside the lab network boundary</li>
+      </ul>
+    </article>
+
+    <article class="detail-card">
+      <h3>Core Components</h3>
+      <ul>
+        <li>kubeadm for cluster bootstrap</li>
+        <li>kubelet and kubectl for node and cluster control</li>
+        <li>containerd as the container runtime</li>
+        <li>Helm for Cilium deployment</li>
+        <li>Cilium as the initial CNI</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<section class="case-section">
+  <h2>Architecture Flow</h2>
+
+  <div class="mermaid-card">
+    <pre class="mermaid">
+flowchart TB
+  LAB[Proxmox Lab Environment]
+
+  CP[Control Plane Node]
+  W1[Worker Node 1]
+  W2[Worker Node 2]
+
+  RUNTIME[containerd Runtime]
+  KUBE[kubeadm / kubelet / kubectl]
+  CNI[Cilium CNI]
+  HELM[Helm Deployment Path]
+
+  PODS[Pod Networking and Workloads]
+  VALIDATION[Cilium Status and Test Validation]
+
+  LAB --> CP
+  LAB --> W1
+  LAB --> W2
+
+  CP --> KUBE
+  W1 --> KUBE
+  W2 --> KUBE
+
+  KUBE --> RUNTIME
+  KUBE --> HELM
+  HELM --> CNI
+  CNI --> PODS
+  PODS --> VALIDATION
+    </pre>
+  </div>
+</section>
+
+<section class="case-section">
+  <h2>Key Decisions</h2>
+
+  <div class="two-column">
+    <article class="detail-card">
+      <h3>kubeadm Instead of a Shortcut</h3>
+      <p>
+        kubeadm was used because the objective was to understand the bootstrap
+        path instead of abstracting it away. This exposed the relationship
+        between node preparation, container runtime configuration, kubelet
+        behavior, and CNI readiness.
+      </p>
+    </article>
+
+    <article class="detail-card">
+      <h3>containerd Runtime</h3>
+      <p>
+        containerd was selected as the runtime because it aligns with the modern
+        Kubernetes operating model. The runtime was configured and validated
+        before relying on kubeadm so runtime problems would not be confused with
+        cluster-level failures.
+      </p>
+    </article>
+
+    <article class="detail-card">
+      <h3>Systemd Cgroups</h3>
+      <p>
+        The container runtime was aligned with systemd cgroup behavior to match
+        kubelet expectations. This was treated as a foundational node
+        configuration item instead of something to troubleshoot later after the
+        cluster was already unstable.
+      </p>
+    </article>
+
+    <article class="detail-card">
+      <h3>Cilium as the Initial CNI</h3>
+      <p>
+        Cilium was chosen over simpler CNI options because it better supports the
+        direction of the lab and mirrors the type of networking work being
+        evaluated professionally. It also provides a stronger path toward future
+        eBPF-based networking, observability, and policy work.
+      </p>
+    </article>
+  </div>
+</section>
+
+<section class="case-section">
+  <h2>CNI Tradeoff</h2>
+
+  <p>
+    The CNI decision was one of the most important choices in the build. Flannel
+    would have been simple and fast, but it would not provide the same future
+    path for policy, observability, or deeper networking behavior. Calico
+    remains a strong and proven option, especially for network policy use cases,
+    but Cilium matched the lab direction better because of its eBPF foundation
+    and its relevance to the environments being evaluated at work.
+  </p>
+
+  <p>
+    The practical decision was to accept a slightly more advanced CNI early
+    because the lab is meant to become a real testing and learning platform, not
+    just a minimal cluster that passes a basic smoke test.
+  </p>
+</section>
+
+<section class="case-section">
+  <h2>Implementation Path</h2>
+
+  <ol class="case-list">
+    <li>Prepared three Ubuntu virtual machines for cluster roles.</li>
+    <li>Configured node identity, host resolution, and static addressing.</li>
+    <li>Installed and configured containerd.</li>
+    <li>Aligned containerd cgroup behavior with kubelet expectations.</li>
+    <li>Installed Kubernetes tooling across nodes.</li>
+    <li>Initialized the control plane with kubeadm.</li>
+    <li>Joined both worker nodes to the cluster.</li>
+    <li>Installed Cilium through Helm.</li>
+    <li>Validated cluster health and Cilium readiness.</li>
+    <li>Ran Cilium validation testing and confirmed successful results.</li>
+  </ol>
+</section>
+
+<section class="case-section">
+  <h2>Troubleshooting Notes</h2>
+
+  <p>
+    The troubleshooting process stayed focused on validating one layer at a
+    time. Node configuration came first, then container runtime behavior, then
+    kubeadm bootstrap, then CNI installation. That prevented the build from
+    turning into a blind pile of changes.
+  </p>
+
+  <div class="two-column">
+    <article class="detail-card">
+      <h3>Node Readiness</h3>
+      <p>
+        Hostname and address consistency mattered. Kubernetes becomes noisy
+        quickly when node identity, static IPs, or local host resolution are
+        wrong. Those basics were validated before moving deeper into the stack.
+      </p>
+    </article>
+
+    <article class="detail-card">
+      <h3>Runtime Before Cluster</h3>
+      <p>
+        containerd needed to be running and configured correctly before the
+        cluster bootstrap could be trusted. The runtime was treated as a
+        dependency, not an afterthought.
+      </p>
+    </article>
+
+    <article class="detail-card">
+      <h3>CNI as a Gate</h3>
+      <p>
+        The cluster was not considered healthy just because nodes joined. Pod
+        networking had to be functional before moving forward. Cilium status and
+        test validation were used as the gate.
+      </p>
+    </article>
+
+    <article class="detail-card">
+      <h3>Avoiding Stack Creep</h3>
+      <p>
+        Storage, ingress, service mesh, and observability were intentionally
+        deferred until the base cluster was validated. The first milestone was a
+        healthy networked cluster, not a pile of half-working add-ons.
+      </p>
+    </article>
+  </div>
+</section>
+
+<section class="case-section">
+  <h2>Validation</h2>
+
+  <p>
+    The cluster was validated by confirming node membership, checking Cilium
+    health, and running the Cilium validation test suite. The final validation
+    result was a successful Cilium test run with 132 checks passing.
+  </p>
+
+  <div class="validation-grid">
+    <article class="detail-card">
+      <h3>Control Plane</h3>
+      <p>
+        Initialized successfully and became the management point for the cluster.
+      </p>
+    </article>
+
+    <article class="detail-card">
+      <h3>Worker Nodes</h3>
+      <p>
+        Both worker nodes joined successfully and appeared in cluster node
+        output.
+      </p>
+    </article>
+
+    <article class="detail-card">
+      <h3>Cilium</h3>
+      <p>
+        Cilium installed through Helm and reported healthy status after
+        deployment.
+      </p>
+    </article>
+
+    <article class="detail-card">
+      <h3>Test Result</h3>
+      <p>
+        Cilium validation completed successfully with 132 checks passing.
+      </p>
+    </article>
+  </div>
+</section>
+
+<section class="case-section">
+  <h2>Outcome</h2>
+
+  <p>
+    The result was a functional three-node Kubernetes cluster built from zero in
+    roughly 5.5 hours. That included VM preparation, Kubernetes bootstrap,
+    container runtime configuration, CNI selection, Cilium installation, and
+    validation testing.
+  </p>
+
+  <p>
+    More importantly, the build created a repeatable foundation for future lab
+    work. The cluster is now positioned to support ingress testing, Istio or
+    other service mesh work, observability, TLS experiments, workload deployment,
+    and operational troubleshooting.
+  </p>
+</section>
+
+<section class="case-section">
+  <h2>Lessons Learned</h2>
+
+  <ul class="case-list">
+    <li>
+      A Kubernetes cluster is only as stable as the layers underneath it: node
+      configuration, runtime configuration, and networking all matter.
+    </li>
+    <li>
+      CNI selection should match the future direction of the environment, not
+      just the fastest path to a green cluster.
+    </li>
+    <li>
+      Successful node joins are not the finish line. Pod networking and CNI
+      validation are what make the cluster usable.
+    </li>
+    <li>
+      Deferring storage, ingress, and service mesh until the base cluster is
+      healthy keeps troubleshooting controlled.
+    </li>
+    <li>
+      Time tracking matters. Being able to build a validated networked cluster
+      from zero in roughly 5.5 hours is a useful engineering benchmark.
+    </li>
+  </ul>
+</section>
+
+<section class="case-section">
+  <h2>Next Actions</h2>
+
+  <ul class="case-list">
+    <li>Add an ingress or gateway layer for application access testing.</li>
+    <li>Continue service mesh evaluation with Istio as the next direction.</li>
+    <li>Add observability tooling once workload routing is stable.</li>
+    <li>Document TLS and certificate handling patterns.</li>
+    <li>Evaluate storage options after the base platform remains stable.</li>
+    <li>Continue writing operator logs as major lab capabilities are added.</li>
+  </ul>
+</section>
+
+<section class="project-footer">
+  <a class="button secondary" href="/projects/kubernetes-service-mesh.html">
+    Back to Kubernetes Case Study
+  </a>
+  <a class="button primary" href="/">
+    Back to Home
+  </a>
+</section>

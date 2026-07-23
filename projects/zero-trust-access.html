@@ -109,13 +109,13 @@
 
       <div class="mermaid-card">
         <pre class="mermaid">
-flowchart TD
-  U[User Browser] --> CFA[Cloudflare Access]
-  CFA -->|Google SSO + MFA| POL[Explicit Allow Policy]
-  POL -->|Default deny if not allowed| TUN[Cloudflare Tunnel]
-  TUN -->|Outbound-only connection| GUA[Apache Guacamole]
-  GUA -->|App authentication| BAST[Bastion / Jump Box]
-  BAST -->|RDP / SSH| INT[Segmented Internal Systems]
+flowchart LR
+  U[User Browser] --> A[Cloudflare Access]
+  A --> P[Allow Policy]
+  P --> T[Cloudflare Tunnel]
+  T --> G[Guacamole]
+  G --> B[Bastion]
+  B --> I[Internal Systems]
         </pre>
       </div>
 
@@ -440,12 +440,14 @@ flowchart TD
         secondaryColor: "#182832",
         tertiaryColor: "#20313c",
         fontFamily: "Inter, system-ui, sans-serif",
-        fontSize: "11px"
+        fontSize: "10px"
       },
       flowchart: {
         useMaxWidth: true,
         htmlLabels: true,
-        curve: "basis"
+        curve: "linear",
+        nodeSpacing: 18,
+        rankSpacing: 28
       }
     });
   </script>

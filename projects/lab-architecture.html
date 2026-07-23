@@ -93,27 +93,20 @@
       <div class="mermaid-card">
         <pre class="mermaid">
 flowchart TB
-  USER[Visitor / Student / Operator]
+  USER[User]
+  PUBLIC[Public Site]
+  ACCESS[Remote Access]
+  CORE[Core Infra]
+  NET[Network Segments]
+  LABS[Lab Workloads]
+  OPS[Recovery Ops]
 
-  PUBLIC[Public Presentation Layer<br/>Gillpad.dev / Cloudflare Pages]
-
-  ACCESS[Secure Remote Access Layer<br/>Cloudflare Access / Tunnel / Guacamole / Bastion]
-
-  CORE[Core Infrastructure Layer<br/>OPNsense / Proxmox VE / PBS / Management VM]
-
-  SEGMENTS[Virtual Network Segments<br/>Management / Internal Services / Security Range]
-
-  WORKLOADS[Lab Workload Layer<br/>GOAD / Kubernetes / Sandbox / General VMs / Tooling]
-
-  OPS[Operations and Recovery Layer<br/>Backups / Verification / Snapshots / Runbooks]
-
-  USER -->|Public website| PUBLIC
-  USER -->|Private lab access| ACCESS
-
+  USER --> PUBLIC
+  USER --> ACCESS
   ACCESS --> CORE
-  CORE --> SEGMENTS
-  SEGMENTS --> WORKLOADS
-  WORKLOADS --> OPS
+  CORE --> NET
+  NET --> LABS
+  LABS --> OPS
   CORE --> OPS
         </pre>
       </div>
@@ -206,11 +199,11 @@ flowchart TB
       <div class="mermaid-card">
         <pre class="mermaid">
 flowchart LR
-  USER[Operator] --> CFA[Cloudflare Access]
-  CFA --> TUN[Cloudflare Tunnel]
-  TUN --> GUAC[Apache Guacamole]
-  GUAC --> BAST[Bastion / Jump Box]
-  BAST --> PVE[Proxmox / Internal Systems]
+  OP[Operator] --> CF[Cloudflare]
+  CF --> TUN[Tunnel]
+  TUN --> GUAC[Guacamole]
+  GUAC --> BAST[Bastion]
+  BAST --> LAB[Lab Systems]
         </pre>
       </div>
 
@@ -258,17 +251,17 @@ flowchart LR
       <div class="mermaid-card">
         <pre class="mermaid">
 flowchart TB
-  PVE[Proxmox VE Platform]
+  PVE[Proxmox VE]
 
-  PVE --> MGMT[Management / Automation VM]
-  PVE --> TOOL[Proxmox Management Platform]
-  PVE --> K8S[Kubernetes / Istio Lab]
-  PVE --> GOAD[GOAD Security Range]
-  PVE --> MAL[Malware / Sandbox Lab]
-  PVE --> GEN[General Linux / Windows VMs]
-  PVE --> PBS[Proxmox Backup Server]
+  PVE --> MGMT[Mgmt VM]
+  PVE --> TOOL[Lab Tooling]
+  PVE --> K8S[Kubernetes]
+  PVE --> GOAD[GOAD Range]
+  PVE --> MAL[Sandbox]
+  PVE --> GEN[General VMs]
+  PVE --> PBS[PBS]
 
-  PBS --> BACKUP[Backups / Verification]
+  PBS --> BACKUP[Backups]
         </pre>
       </div>
 
@@ -482,7 +475,14 @@ flowchart TB
         secondaryColor: "#182832",
         tertiaryColor: "#20313c",
         fontFamily: "Inter, system-ui, sans-serif",
-        fontSize: "15px"
+        fontSize: "10px"
+      },
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true,
+        curve: "linear",
+        nodeSpacing: 18,
+        rankSpacing: 28
       }
     });
   </script>

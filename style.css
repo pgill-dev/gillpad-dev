@@ -345,11 +345,11 @@ section > p {
   line-height: 1.5;
 }
 
-/* Mermaid Flowcharts */
+/* Mermaid diagram cards */
 .mermaid-card {
   margin: 2.5rem auto;
   padding: 2rem;
-  width: min(1200px, 100%);
+  width: min(1150px, 100%);
   border: 1px solid rgba(77, 225, 193, 0.25);
   border-radius: 14px;
   background:
@@ -363,19 +363,19 @@ section > p {
 }
 
 .mermaid-card svg {
-  min-width: 950px;
   width: 100%;
   max-width: 100%;
   height: auto;
-  font-size: 22px;
+  display: block;
 }
 
 .mermaid-card .node rect,
 .mermaid-card .node polygon,
-.mermaid-card .node path {
+.mermaid-card .node path,
+.mermaid-card .node circle {
   fill: rgba(18, 28, 34, 0.95) !important;
   stroke: rgba(77, 225, 193, 0.75) !important;
-  stroke-width: 2.5px !important;
+  stroke-width: 2px !important;
 }
 
 .mermaid-card .nodeLabel,
@@ -383,25 +383,36 @@ section > p {
 .mermaid-card text {
   fill: #e8fff7 !important;
   color: #e8fff7 !important;
-  font-size: 22px !important;
-  font-weight: 800 !important;
+  font-size: 15px !important;
+  font-weight: 700 !important;
 }
 
 .mermaid-card .edgePath path {
   stroke: rgba(120, 210, 255, 0.9) !important;
-  stroke-width: 3px !important;
+  stroke-width: 2px !important;
 }
 
 .mermaid-card .edgeLabel {
   background-color: rgba(10, 18, 24, 0.9) !important;
   color: #c9fff1 !important;
-  font-size: 17px !important;
-  font-weight: 800 !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
 }
 
 .mermaid-card marker path {
   fill: rgba(120, 210, 255, 0.9) !important;
   stroke: rgba(120, 210, 255, 0.9) !important;
+}
+
+@media (max-width: 768px) {
+  .mermaid-card {
+    padding: 1rem;
+    width: 100%;
+  }
+
+  .mermaid-card svg {
+    min-width: 720px;
+  }
 }
 
 /* Footer */

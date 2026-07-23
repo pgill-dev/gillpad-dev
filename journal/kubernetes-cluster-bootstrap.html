@@ -1,37 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <title>Kubernetes Cluster Bootstrap and Cilium Validation | Gillpad Engineering Journal</title>
 
   <meta
     name="description"
     content="Engineering journal entry documenting a three-node Kubernetes lab cluster bootstrap using kubeadm, containerd, Helm, and Cilium."
-  />
+  >
 
-  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
-  <header class="site-header">
-    <a class="logo" href="/">Gillpad</a>
 
-    <nav class="nav-links">
-      <a href="/">Home</a>
-      <a href="/#projects">Projects</a>
-      <a href="/projects/kubernetes-service-mesh.html">Kubernetes</a>
-      <a href="/#contact">Contact</a>
+  <header class="hero" style="min-height:auto;">
+    <nav aria-label="Primary navigation">
+
+      <a class="logo" href="/">
+        GILLPAD.DEV
+      </a>
+
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/#projects">Projects</a>
+        <a href="/projects/kubernetes-service-mesh.html">Kubernetes</a>
+        <a href="/#contact">Contact</a>
+      </div>
+
     </nav>
   </header>
 
-  <main>
-    <section class="case-hero">
-      <p class="eyebrow">Engineering Journal</p>
-      <h1>Kubernetes Cluster Bootstrap and Cilium Validation</h1>
+  <main class="case-study">
 
-      <p class="hero-summary">
+    <section class="case-hero">
+
+      <a class="back-link" href="/projects/kubernetes-service-mesh.html">
+        ← Back to Kubernetes case study
+      </a>
+
+      <p class="eyebrow">
+        ENGINEERING JOURNAL
+      </p>
+
+      <h1>
+        Kubernetes Cluster Bootstrap and Cilium Validation
+      </h1>
+
+      <p class="case-summary">
         A field note from building a three-node Kubernetes lab cluster from zero
         using Ubuntu virtual machines, kubeadm, containerd, Helm, and Cilium.
         The goal was not just to get Kubernetes running, but to understand and
@@ -39,16 +61,24 @@
       </p>
 
       <div class="case-meta">
-        <span>Kubernetes</span>
-        <span>containerd</span>
-        <span>Cilium</span>
-        <span>Helm</span>
-        <span>Validation</span>
+        <span class="tag">Kubernetes</span>
+        <span class="tag">containerd</span>
+        <span class="tag">Cilium</span>
+        <span class="tag">Helm</span>
+        <span class="tag">Validation</span>
       </div>
+
     </section>
 
     <section class="case-section">
-      <h2>Purpose</h2>
+
+      <p class="section-label">
+        PURPOSE
+      </p>
+
+      <h2>
+        The build established a real Kubernetes foundation for the lab.
+      </h2>
 
       <p>
         This build established the first functional Kubernetes foundation in the
@@ -63,12 +93,21 @@
         depends on the operating system, container runtime, node networking, CNI
         behavior, and cluster bootstrap process.
       </p>
+
     </section>
 
     <section class="case-section">
-      <h2>Environment</h2>
+
+      <p class="section-label">
+        ENVIRONMENT
+      </p>
+
+      <h2>
+        The cluster started as three prepared Ubuntu virtual machines.
+      </h2>
 
       <div class="two-column">
+
         <article class="detail-card">
           <h3>Cluster Layout</h3>
           <ul>
@@ -90,28 +129,36 @@
             <li>Cilium as the initial CNI</li>
           </ul>
         </article>
+
       </div>
+
     </section>
 
     <section class="case-section">
-      <h2>Architecture Flow</h2>
+
+      <p class="section-label">
+        ARCHITECTURE FLOW
+      </p>
+
+      <h2>
+        The cluster was built layer by layer.
+      </h2>
 
       <div class="mermaid-card">
         <pre class="mermaid">
 flowchart TB
-  LAB[Proxmox Lab Environment]
+  LAB[Proxmox Lab]
 
-  CP[Control Plane Node]
-  W1[Worker Node 1]
-  W2[Worker Node 2]
+  CP[Control Plane]
+  W1[Worker 1]
+  W2[Worker 2]
 
-  RUNTIME[containerd Runtime]
-  KUBE[kubeadm / kubelet / kubectl]
-  CNI[Cilium CNI]
-  HELM[Helm Deployment Path]
-
-  PODS[Pod Networking and Workloads]
-  VALIDATION[Cilium Status and Test Validation]
+  KUBE[Kubernetes Tools]
+  RUNTIME[containerd]
+  HELM[Helm]
+  CNI[Cilium]
+  PODS[Pods]
+  TESTS[Validation]
 
   LAB --> CP
   LAB --> W1
@@ -125,15 +172,24 @@ flowchart TB
   KUBE --> HELM
   HELM --> CNI
   CNI --> PODS
-  PODS --> VALIDATION
+  PODS --> TESTS
         </pre>
       </div>
+
     </section>
 
     <section class="case-section">
-      <h2>Key Decisions</h2>
+
+      <p class="section-label">
+        KEY DECISIONS
+      </p>
+
+      <h2>
+        The design choices prioritized learning, repeatability, and future platform work.
+      </h2>
 
       <div class="two-column">
+
         <article class="detail-card">
           <h3>kubeadm Instead of a Shortcut</h3>
           <p>
@@ -173,11 +229,20 @@ flowchart TB
             toward future eBPF-based networking, observability, and policy work.
           </p>
         </article>
+
       </div>
+
     </section>
 
     <section class="case-section">
-      <h2>CNI Tradeoff</h2>
+
+      <p class="section-label">
+        CNI TRADEOFF
+      </p>
+
+      <h2>
+        Cilium was selected for the direction the lab is going, not just the fastest path.
+      </h2>
 
       <p>
         The CNI decision was one of the most important choices in the build.
@@ -194,10 +259,18 @@ flowchart TB
         because the lab is meant to become a real testing and learning platform,
         not just a minimal cluster that passes a basic smoke test.
       </p>
+
     </section>
 
     <section class="case-section">
-      <h2>Implementation Path</h2>
+
+      <p class="section-label">
+        IMPLEMENTATION PATH
+      </p>
+
+      <h2>
+        The work moved from node preparation to cluster validation.
+      </h2>
 
       <ol class="case-list">
         <li>Prepared three Ubuntu virtual machines for cluster roles.</li>
@@ -211,10 +284,18 @@ flowchart TB
         <li>Validated cluster health and Cilium readiness.</li>
         <li>Ran Cilium validation testing and confirmed successful results.</li>
       </ol>
+
     </section>
 
     <section class="case-section">
-      <h2>Troubleshooting Notes</h2>
+
+      <p class="section-label">
+        TROUBLESHOOTING NOTES
+      </p>
+
+      <h2>
+        The troubleshooting process stayed focused on one layer at a time.
+      </h2>
 
       <p>
         The troubleshooting process stayed focused on validating one layer at a
@@ -224,6 +305,7 @@ flowchart TB
       </p>
 
       <div class="two-column">
+
         <article class="detail-card">
           <h3>Node Readiness</h3>
           <p>
@@ -259,11 +341,20 @@ flowchart TB
             was a healthy networked cluster, not a pile of half-working add-ons.
           </p>
         </article>
+
       </div>
+
     </section>
 
     <section class="case-section">
-      <h2>Validation</h2>
+
+      <p class="section-label">
+        VALIDATION
+      </p>
+
+      <h2>
+        The cluster was validated with node checks, Cilium health, and Cilium testing.
+      </h2>
 
       <p>
         The cluster was validated by confirming node membership, checking Cilium
@@ -271,7 +362,8 @@ flowchart TB
         result was a successful Cilium test run with 132 checks passing.
       </p>
 
-      <div class="validation-grid">
+      <div class="two-column">
+
         <article class="detail-card">
           <h3>Control Plane</h3>
           <p>
@@ -302,11 +394,20 @@ flowchart TB
             Cilium validation completed successfully with 132 checks passing.
           </p>
         </article>
+
       </div>
+
     </section>
 
     <section class="case-section">
-      <h2>Outcome</h2>
+
+      <p class="section-label">
+        OUTCOME
+      </p>
+
+      <h2>
+        The result was a validated three-node Kubernetes foundation.
+      </h2>
 
       <p>
         The result was a functional three-node Kubernetes cluster built from zero
@@ -321,10 +422,18 @@ flowchart TB
         or other service mesh work, observability, TLS experiments, workload
         deployment, and operational troubleshooting.
       </p>
+
     </section>
 
     <section class="case-section">
-      <h2>Lessons Learned</h2>
+
+      <p class="section-label">
+        LESSONS LEARNED
+      </p>
+
+      <h2>
+        The base platform needs to be healthy before adding more layers.
+      </h2>
 
       <ul class="case-list">
         <li>
@@ -349,10 +458,18 @@ flowchart TB
           benchmark.
         </li>
       </ul>
+
     </section>
 
     <section class="case-section">
-      <h2>Next Actions</h2>
+
+      <p class="section-label">
+        NEXT ACTIONS
+      </p>
+
+      <h2>
+        The validated base cluster becomes the platform for the next phase.
+      </h2>
 
       <ul class="case-list">
         <li>Add an ingress or gateway layer for application access testing.</li>
@@ -362,18 +479,26 @@ flowchart TB
         <li>Evaluate storage options after the base platform remains stable.</li>
         <li>Continue writing operator logs as major lab capabilities are added.</li>
       </ul>
+
+      <div class="project-footer">
+        <a class="button primary" href="/projects/kubernetes-service-mesh.html">
+          Back to Kubernetes case study
+        </a>
+
+        <a class="button secondary" href="/#projects">
+          Back to projects
+        </a>
+      </div>
+
     </section>
 
-    <section class="project-footer">
-      <a class="button secondary" href="/projects/kubernetes-service-mesh.html">
-        Back to Kubernetes Case Study
-      </a>
-
-      <a class="button primary" href="/">
-        Back to Home
-      </a>
-    </section>
   </main>
+
+  <footer>
+    <p>
+      © 2026 Paden Gillispie. Built with GitHub and Cloudflare Pages.
+    </p>
+  </footer>
 
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs";
@@ -392,9 +517,17 @@ flowchart TB
         secondaryColor: "#182832",
         tertiaryColor: "#20313c",
         fontFamily: "Inter, system-ui, sans-serif",
-        fontSize: "18px"
+        fontSize: "10px"
+      },
+      flowchart: {
+        useMaxWidth: true,
+        htmlLabels: true,
+        curve: "linear",
+        nodeSpacing: 18,
+        rankSpacing: 28
       }
     });
   </script>
+
 </body>
 </html>
